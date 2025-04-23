@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e38232831e15146a46276913ada7d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CodeRewriterFeatures:
+  - Name: Disable Asset Bundle Compatibility Checks
+    Enable: 0
+    RuleSets:
+    - UnityVersion: (?:2021|2022).*
+      Rules:
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb r0, [r6, #28]
+            OriginalMachineCode: 3077
+            Index: -1
+            NewInstructionDescription: strb r5, [r6, #28]
+            NewMachineCode: 3577
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w23, [x19, #376]
+            OriginalMachineCode: 77e20539
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #376]
+            NewMachineCode: 7fe20539
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #0x190]
+            OriginalMachineCode: 68420639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #0x190]
+            NewMachineCode: 7f420639
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb.w r0, [r5, #36]
+            OriginalMachineCode: 85F82400
+            Index: -1
+            NewInstructionDescription: strb.w r6, [r5, #36]
+            NewMachineCode: 85F82460
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w26, [x19, #416]
+            OriginalMachineCode: 7A820639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #416]
+            NewMachineCode: 7F820639
+      - BuildTarget: 9
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #0x1b8]
+            OriginalMachineCode: 68E20639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #0x1b8]
+            NewMachineCode: 7FE20639
+  - Name: Fix Freezing in AsyncResourceUploadBlocking
+    Enable: 0
+    RuleSets:
+    - UnityVersion: 2022\.3\.60f1
+      Rules:
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*\.a:(.*\.o):.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp w12, w9
+            OriginalMachineCode: 9F01096B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.eq
+            OriginalMachineCode: E0020054
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: cmp w12, w11
+            OriginalMachineCode: 9F010B6B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.ne
+            OriginalMachineCode: A1FDFF54
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: mov w0, #0x0
+            OriginalMachineCode: 00008052
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b
+            OriginalMachineCode: 03000014
+            Index: -1
+            NewInstructionDescription: b
+            NewMachineCode: E5FFFF17
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp w12, w9
+            OriginalMachineCode: 9F01096B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.eq
+            OriginalMachineCode: E0020054
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: cmp w12, w11
+            OriginalMachineCode: 9F010B6B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.ne
+            OriginalMachineCode: A1FDFF54
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: mov w0, wzr
+            OriginalMachineCode: E0031F2A
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b
+            OriginalMachineCode: 03000014
+            Index: -1
+            NewInstructionDescription: b
+            NewMachineCode: E5FFFF17
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp r3, r2
+            OriginalMachineCode: 9342
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: beq #54
+            OriginalMachineCode: 1BD0
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: cmp r3, r1
+            OriginalMachineCode: 8B42
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: bne #-52
+            OriginalMachineCode: E6D1
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: movs r0, #0
+            OriginalMachineCode: 0020
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: pop {r4, pc}
+            OriginalMachineCode: 10BD
+            Index: 0
+            NewInstructionDescription: b
+            NewMachineCode: DDE7
