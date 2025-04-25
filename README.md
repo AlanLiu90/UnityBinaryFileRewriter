@@ -5,23 +5,24 @@
 
 ## 使用
 1. 引用包：Packages\com.modx.enginebinaryfilerewriter
-2. 在 Project Settings -> Engine Binary File Rewriter 中进行配置
+2. 在 Project Settings -> Engine Binary File Rewriter 中进行配置。配置方式可参考[文章](https://alanliu90.hatenablog.com/entry/2025/04/23/Unity%E4%B8%AD%E5%85%A8%E5%B1%80%E7%A6%81%E7%94%A8AssetBundle%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7%E6%A3%80%E6%9F%A5)
 
 ### 支持说明
-支持Unity 2021、2022
+支持Unity 2019~2022
 * Android
-  * 支持ARMv7、ARM64
+  * 只支持ARMv7、ARM64
   * 支持的构建方式
     * 直接构建apk/aab
     * 先导出Gradle工程，再构建apk/aab
 * iOS
-  * 只支持在设备上运行的ARM64，不支持模拟器版本
+  * 只支持在设备上运行的版本，不支持模拟器版本
   * 需要在Mac上导出Xcode工程，并且确保已安装以下命令行工具（一般是安装 Xcode Command Line Tools）：
     * nm
     * ar
     * otool
     * objdump
     * c++filt
+    * lipo
 
 ## 已配置功能
 项目可以将`ProjectSettings\EngineBinaryFileRewriterSettings.asset`拷贝到自己的工程中，并启用需要的功能
@@ -37,9 +38,11 @@ req.SetEnableCompatibilityChecks(false); // Non-public, needs to be called by re
 ```
 本工具可以全局禁用掉AssetBundle的兼容性检查
 
-工程中包含了Android（ARMv7和ARM64）、iOS的开发版本和发布版本的配置。已测试版本：
+工程中包含了Android、iOS的开发版本和发布版本的配置。已测试版本：
 * 2022.3.60
 * 2021.3.45
+* 2020.3.48
+* 2019.4.40
 
 #### 在设备上测试配置的正确性（以Android为例，iOS类似）
 1. 在Project Settings -> Engine Binary File Rewriter中，开启这个功能
@@ -72,7 +75,7 @@ req.SetEnableCompatibilityChecks(false); // Non-public, needs to be called by re
 
 本工具通过调整信号量类中一个函数的指令规避这个问题，但是有性能损失
 
-工程中包含了Android（ARMv7和ARM64）、iOS的发布版本的配置。已测试版本：
+工程中包含了Android、iOS的发布版本的配置。已测试版本：
 * 2022.3.60
 * 2022.3.20
 
@@ -81,4 +84,4 @@ req.SetEnableCompatibilityChecks(false); // Non-public, needs to be called by re
 2. 集成工具，确定问题不再出现
 
 ## Todo
-* 支持更多的Unity版本（2019、2020和6+）
+* 支持更多的Unity版本（2023、6+）

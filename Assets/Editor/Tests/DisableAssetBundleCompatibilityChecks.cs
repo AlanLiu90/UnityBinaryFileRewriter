@@ -86,10 +86,30 @@ public class DisableAssetBundleCompatibilityChecks
         var path = Path.Combine(XcodeProjectDir, "Libraries/libiPhone-lib.a");
         var backupPath = path + ".bak";
 
+#if UNITY_2020_1_OR_NEWER
         var diffsInUIDAndGID = Utility.GetDiffsInUIDAndGID(backupPath, path);
         var diffs = GetDiffs(Feature, BuildTarget.iOS, Architecture.ARM64, development, diffsInUIDAndGID).ToArray();
 
         Utility.CompareFiles(backupPath, path, diffs);
+#else
+        var archs = new Architecture[] { Architecture.ARMv7, Architecture.ARM64 };
+
+        foreach (var arch in archs)
+        {
+            var archStr = arch.ToString().ToLowerInvariant();
+
+            string file1 = $"{archStr}.a";
+            string file2 = $"{archStr}.a.bak";
+
+            Utility.ExtractThinLibrary(path, archStr, file1);
+            Utility.ExtractThinLibrary(backupPath, archStr, file2);
+
+            var diffsInUIDAndGID = Utility.GetDiffsInUIDAndGID(file2, file1);
+            var diffs = GetDiffs(Feature, BuildTarget.iOS, arch, development, diffsInUIDAndGID).ToArray();
+
+            Utility.CompareFiles(file2, file1, diffs);
+        }
+#endif
     }
 
     private static (int, int)[] GetDiffs(string feature, BuildTarget target, Architecture architecture, bool development, (int, int)[] diffsInUIDAndGID = null)

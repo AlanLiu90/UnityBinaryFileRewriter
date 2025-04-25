@@ -44,6 +44,14 @@ public static class Utility
         EngineBinaryFileRewriterSettings.Save();
     }
 
+    public static void ExtractThinLibrary(string path, string arch, string output)
+    {
+        string temp = output + ".tmp";
+        RunProcess("lipo", $"-extract {arch} {path} -output {temp}");
+        RunProcess("lipo", $"-thin {arch} {temp} -output {output}");
+        File.Delete(temp);
+    }
+
     public static void CompareFiles(string file1, string file2, (int, int)[] expectedDiffs)
     {
         Assert.AreEqual(new FileInfo(file1).Length, new FileInfo(file2).Length);

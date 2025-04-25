@@ -26,15 +26,15 @@ namespace EngineBinaryFileRewriter
             if (!Utility.ValidateEngineBinaryFileRewriterSettings())
                 return;
 
+#if UNITY_2020_1_OR_NEWER
             bool development = (report.summary.options & BuildOptions.Development) != 0;
             var rules = Utility.GetCodeRewriteRules(BuildTarget.iOS, Architecture.ARM64, development);
             if (!rules.Any())
                 return;
 
-            string libiPhonePath = Path.Combine(report.summary.outputPath, "Libraries/libiPhone-lib.a");
-
             var toolset = new ToolSetIOS();
 
+            string libiPhonePath = Path.Combine(report.summary.outputPath, "Libraries/libiPhone-lib.a");
             Debug.Log("Start to process " + libiPhonePath);
 
             var originalLibPath = libiPhonePath;
@@ -42,6 +42,46 @@ namespace EngineBinaryFileRewriter
 
             File.Copy(originalLibPath, libiPhonePath, true);
 
+            ModifyLibrary(toolset, Architecture.ARM64, rules, libiPhonePath);
+#else
+            bool development = (report.summary.options & BuildOptions.Development) != 0;
+            var armv7Rules = Utility.GetCodeRewriteRules(BuildTarget.iOS, Architecture.ARMv7, development);
+            var arm64Rules = Utility.GetCodeRewriteRules(BuildTarget.iOS, Architecture.ARM64, development);
+            if (!armv7Rules.Any() && !arm64Rules.Any())
+                return;
+
+            var toolset = new ToolSetIOS();
+
+            string libiPhonePath = Path.Combine(report.summary.outputPath, "Libraries/libiPhone-lib.a");
+            Debug.Log("Start to process " + libiPhonePath);
+
+            string armv7Path = libiPhonePath.Replace(".a", "-armv7.a");
+            string arm64Path = libiPhonePath.Replace(".a", "-arm64.a");
+
+            ExtractThinLibrary(toolset, libiPhonePath, "armv7", armv7Path);
+            ExtractThinLibrary(toolset, libiPhonePath, "arm64", arm64Path);
+
+            ModifyLibrary(toolset, Architecture.ARMv7, armv7Rules, armv7Path);
+            ModifyLibrary(toolset, Architecture.ARM64, arm64Rules, arm64Path);
+
+            var originalLibPath = libiPhonePath;
+            libiPhonePath = Path.Combine(report.summary.outputPath, "Libraries/libiPhone-lib.tmp.a");
+
+            Utility.RunProcess(toolset.Lipo, $"-create {armv7Path} {arm64Path} -output {libiPhonePath}");
+#endif
+
+            var backupFile = originalLibPath + ".bak";
+            if (File.Exists(backupFile))
+                File.Delete(backupFile);
+
+            File.Move(originalLibPath, backupFile);
+            File.Move(libiPhonePath, originalLibPath);
+
+            Debug.LogFormat("Rewrited {0}", originalLibPath);
+        }
+
+        private void ModifyLibrary(ToolSetIOS toolset, Architecture architecture, IEnumerable<(string, CodeRewriterRule)> rules, string libiPhonePath)
+        {
             string libDir = Path.GetDirectoryName(libiPhonePath);
 
             var symbolText = Utility.RunProcess(libDir, toolset.NM, $"-o \"{Path.GetFileName(libiPhonePath)}\"");
@@ -99,7 +139,11 @@ namespace EngineBinaryFileRewriter
                         {
                             Debug.LogFormat("Start to rewrite symbol: {0}", symbolName);
 
-                            result = Utility.RunProcess(toolset.ObjDump, $"--disassemble-symbols={symbolName} \"{objectFilePath}\"");
+                            string arguments = $"--disassemble-symbols={symbolName} \"{objectFilePath}\"";
+                            if (architecture == Architecture.ARMv7)
+                                arguments += " --mattr=+armv7s";
+
+                            result = Utility.RunProcess(toolset.ObjDump, arguments);
 
                             // Debug.Log(result);
 
@@ -163,15 +207,14 @@ namespace EngineBinaryFileRewriter
                     }
                 }
             }
+        }
 
-            var backupFile = originalLibPath + ".bak";
-            if (File.Exists(backupFile))
-                File.Delete(backupFile);
-
-            File.Move(originalLibPath, backupFile);
-            File.Move(libiPhonePath, originalLibPath);
-
-            Debug.LogFormat("Rewrited {0}", originalLibPath);
+        private void ExtractThinLibrary(ToolSetIOS toolset, string path, string arch, string output)
+        {
+            string temp = output + ".tmp";
+            Utility.RunProcess(toolset.Lipo, $"-extract {arch} {path} -output {temp}");
+            Utility.RunProcess(toolset.Lipo, $"-thin {arch} {temp} -output {output}");
+            File.Delete(temp);
         }
     }
 }

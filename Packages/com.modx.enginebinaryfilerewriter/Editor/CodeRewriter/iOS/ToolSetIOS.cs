@@ -10,6 +10,7 @@ namespace EngineBinaryFileRewriter
         public string OTool { get; private set; }
         public string ObjDump { get; private set; }
         public string CppFilt { get; private set; }
+        public string Lipo { get; private set; }
 
         private readonly string mInstructionPattern;
 
@@ -30,11 +31,15 @@ namespace EngineBinaryFileRewriter
             if (string.IsNullOrEmpty(Utility.RunProcess("which", "c++filt")))
                 throw new Exception("Failed to find 'c++filt'");
 
+            if (string.IsNullOrEmpty(Utility.RunProcess("which", "lipo")))
+                throw new Exception("Failed to find 'lipo'");
+
             NM = "nm";
             AR = "ar";
             OTool = "otool";
             ObjDump = "objdump";
             CppFilt = "c++filt";
+            Lipo = "lipo";
 
             mInstructionPattern = @"^\s+(\w+): {0}{1}{2}{3}\s+.*$";
         }

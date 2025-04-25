@@ -42,8 +42,6 @@ namespace EngineBinaryFileRewriter
             if (!Directory.Exists(outputPath))
                 return;
 
-            outputPath = Path.GetDirectoryName(outputPath);
-
             var textPattern = new Regex(@"^.*\.text.*$", RegexOptions.Multiline);
 
             foreach (var kv in mArchs)
@@ -52,9 +50,7 @@ namespace EngineBinaryFileRewriter
 
                 var toolset = new ToolSetAndroid(kv.Key);
 
-                var libUnityPath = PlayerSettings.stripEngineCode
-                    ? $"Library/Bee/artifacts/Android/libunity/{arch}/unstripped/libunity.so"
-                    : Path.Combine(outputPath, $"unityLibrary/src/main/jniLibs/{arch}/libunity.so");
+                var libUnityPath = Path.Combine(outputPath, $"src/main/jniLibs/{arch}/libunity.so");
 
                 if (!File.Exists(libUnityPath))
                     continue;
@@ -75,7 +71,7 @@ namespace EngineBinaryFileRewriter
                 var vma = int.Parse(columns[3], NumberStyles.HexNumber);
                 var offset = int.Parse(columns[4], NumberStyles.HexNumber);
 
-                var symbolFile = PlayerSettings.stripEngineCode ? libUnityPath : GetLibUnitySymbol(arch);
+                var symbolFile = GetLibUnitySymbol(arch);
                 var symbolText = Utility.RunProcess(toolset.ObjDump, $"--syms \"{symbolFile}\"");
 
                 bool dirty = false;
@@ -143,58 +139,36 @@ namespace EngineBinaryFileRewriter
 
                 if (dirty)
                 {
-                    if (PlayerSettings.stripEngineCode)
-                    {
-                        string stripFlags = mDevelopmentBuild ? "--strip-debug" : string.Empty;
-                        string stripOutputPath = tempLibUnityPath.Replace("/unstripped/", "/stripped/");
-                        Utility.RunProcess(toolset.Strip, $"\"{tempLibUnityPath}\" {stripFlags} -o \"{stripOutputPath}\"");
+                    File.Delete(libUnityPath);
+                    File.Move(tempLibUnityPath, libUnityPath);
 
-                        string noteUnity = GetNoteUnity();
-                        string libUnitySymPath = Path.GetDirectoryName(Path.GetDirectoryName(libUnityPath)) + "/libunity.sym.so";
-                        string objCopyOutputPath = Path.Combine(outputPath, $"unityLibrary/src/main/jniLibs/{arch}/libunity.so");
-
-                        // if (Application.platform == RuntimePlatform.WindowsEditor)
-                        //     objCopyOutputPath = objCopyOutputPath.Replace('/', '\\');
-
-                        Utility.RunProcess(toolset.ObjCopy, $"--add-section .note.unity=\"{noteUnity}\" --add-gnu-debuglink=\"{libUnitySymPath}\" \"{stripOutputPath}\" \"{objCopyOutputPath}\"");
-
-                        Debug.LogFormat("Rewrited {0}", objCopyOutputPath);
-                    }
-                    else
-                    {
-                        File.Delete(libUnityPath);
-                        File.Move(tempLibUnityPath, libUnityPath);
-
-                        Debug.LogFormat("Rewrited {0}", libUnityPath);
-                    }
+                    Debug.LogFormat("Rewrited {0}", libUnityPath);
                 }
             }
         }
 
-        private static string GetNoteUnity()
-        {
-            string path = EditorApplication.applicationContentsPath;
-
-            if (Application.platform == RuntimePlatform.OSXEditor)
-                path = Path.Combine(path, "../..");
-
-            path = Path.Combine(path, "PlaybackEngines/AndroidPlayer/Variations/il2cpp/Common/StaticLibs/note_unity");
-
-            if (Application.platform == RuntimePlatform.WindowsEditor)
-                path = path.Replace('/', '\\');
-
-            return path;
-        }
-
         private string GetLibUnitySymbol(string arch)
         {
-            string path = EditorApplication.applicationContentsPath;
+            string path;
 
-            if (Application.platform == RuntimePlatform.OSXEditor)
-                path = Path.Combine(path, "../..");
+            if (PlayerSettings.stripEngineCode)
+            {
+#if UNITY_2021_1_OR_NEWER
+                path = $"Library/Bee/artifacts/Android/libunity/{arch}/libunity.sym.so";
+#else
+                path = $"Temp/StagingArea/symbols/{arch}/libunity.sym.so";
+#endif
+            }
+            else
+            {
+                path = EditorApplication.applicationContentsPath;
 
-            string type = mDevelopmentBuild ? "Development" : "Release";
-            path = Path.Combine(path, $"PlaybackEngines/AndroidPlayer/Variations/il2cpp/{type}/Symbols/{arch}/libunity.sym.so");
+                if (Application.platform == RuntimePlatform.OSXEditor)
+                    path = Path.Combine(path, "../..");
+
+                string type = mDevelopmentBuild ? "Development" : "Release";
+                path = Path.Combine(path, $"PlaybackEngines/AndroidPlayer/Variations/il2cpp/{type}/Symbols/{arch}/libunity.sym.so");
+            }
 
             return path;
         }
@@ -216,6 +190,9 @@ namespace EngineBinaryFileRewriter
 #if UNITY_2022_1_OR_NEWER
             if (architecture == Architecture.ARMv7)
                 arguments += " --triple=thumb";
+#else
+            if (architecture == Architecture.ARMv7)
+                arguments += " -Mforce-thumb";
 #endif
 
             return Utility.RunProcess(toolset.ObjDump, $"{arguments} -d \"{libUnityPath}\"");

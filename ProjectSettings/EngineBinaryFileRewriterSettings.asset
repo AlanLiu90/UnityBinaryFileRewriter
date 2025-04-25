@@ -90,10 +90,108 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #0x1b8]
             NewMachineCode: 7FE20639
+    - UnityVersion: (?:2019|2020).*
+      Rules:
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb r0, [r6, #28]
+            OriginalMachineCode: 3077
+            Index: -1
+            NewInstructionDescription: strb r7, [r6, #28]
+            NewMachineCode: 3777
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #376]
+            OriginalMachineCode: 68E20539
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #376]
+            NewMachineCode: 7fe20539
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: mov r1, #1
+            OriginalMachineCode: 0110A0E3
+            Index: -1
+            NewInstructionDescription: mov r1, #0
+            NewMachineCode: 0010A0E3
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #0x190]
+            OriginalMachineCode: 68420639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #0x190]
+            NewMachineCode: 7f420639
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb.w r0, [r4, #36]
+            OriginalMachineCode: 84F82400
+            Index: -1
+            NewInstructionDescription: strb.w r7, [r4, #36]
+            NewMachineCode: 84F82470
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19,#416]
+            OriginalMachineCode: 68820639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19,#416]
+            NewMachineCode: 7F820639
+      - BuildTarget: 9
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: mov r1, #1
+            OriginalMachineCode: 0110A0E3
+            Index: -1
+            NewInstructionDescription: mov r1, #0
+            NewMachineCode: 0010A0E3
+      - BuildTarget: 9
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #0x1b8]
+            OriginalMachineCode: 68E20639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #0x1b8]
+            NewMachineCode: 7FE20639
   - Name: Fix Freezing in AsyncResourceUploadBlocking
     Enable: 0
     RuleSets:
-    - UnityVersion: 2022\.3\.60f1
+    - UnityVersion: 2022.*
       Rules:
       - BuildTarget: 9
         Development: 0
