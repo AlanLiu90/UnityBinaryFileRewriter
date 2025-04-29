@@ -4,7 +4,7 @@
 本工具用于重写Unity引擎的二进制文件，在没有源码的情况下，可以用它实现一些功能、修复一些问题
 
 ## 使用
-1. 引用包：Packages\com.modx.enginebinaryfilerewriter
+1. 引用包com.modx.enginebinaryfilerewriter，参考格式：https://github.com/AlanLiu90/UnityBinaryFileRewriter.git?path=Packages/com.modx.enginebinaryfilerewriter#v0.5.0
 2. 在 Project Settings -> Engine Binary File Rewriter 中进行配置。配置方式可参考[文章](https://alanliu90.hatenablog.com/entry/2025/04/23/Unity%E4%B8%AD%E5%85%A8%E5%B1%80%E7%A6%81%E7%94%A8AssetBundle%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7%E6%A3%80%E6%9F%A5)
 
 ### 支持说明
