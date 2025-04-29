@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace EngineBinaryFileRewriter
 {
@@ -82,6 +83,11 @@ namespace EngineBinaryFileRewriter
 
         private void ModifyLibrary(ToolSetIOS toolset, Architecture architecture, IEnumerable<(string, CodeRewriterRule)> rules, string libiPhonePath)
         {
+            if (!rules.Any())
+                return;
+
+            var library = StaticLibrary.Parse(libiPhonePath);
+
             string libDir = Path.GetDirectoryName(libiPhonePath);
 
             var symbolText = Utility.RunProcess(libDir, toolset.NM, $"-o \"{Path.GetFileName(libiPhonePath)}\"");
@@ -101,7 +107,7 @@ namespace EngineBinaryFileRewriter
                             throw new Exception($"Regex should have one group: {symbol.Pattern}");
 
                         var symbolName = match.Groups[0].Value.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Last();
-                        string demangledSymbolName = Utility.RunProcess(toolset.CppFilt, symbolName).Trim();
+                        var demangledSymbolName = Utility.RunProcess(toolset.CppFilt, $"--strip-underscore {symbolName}").Trim();
 
                         if (symbol.DemangledName != demangledSymbolName)
                             continue;
@@ -124,11 +130,11 @@ namespace EngineBinaryFileRewriter
 
                         Debug.LogFormat("Start to rewrite object file: {0}", objectFile);
 
-                        Utility.RunProcess(toolset.AR, $"xo \"{libiPhonePath}\" \"{objectFilePath}\"");
+                        Utility.RunProcess(libDir, toolset.AR, $"xo \"{libiPhonePath}\" \"{objectFile}\"");
 
-                        var result = Utility.RunProcess(toolset.OTool, $"-l \"{objectFilePath}\"");
+                        var result = Utility.RunProcess(toolset.ReadElf, $"-S \"{objectFilePath}\"");
 
-                        var textSectionPattern = new Regex(@"sectname __text\n\s+segname __TEXT\n\s+addr\s+0x(\d+).*\n\s+size.*\n\s+offset\s+(\d+)");
+                        var textSectionPattern = new Regex(@"Name: __text.*\n\s+Segment: __TEXT.*\n\s+Address:\s+0x(\d+).*\n\s+Size:.*\n\s+Offset:\s+(\d+)");
                         var textSectionMatch = textSectionPattern.Match(result);
                         int textAddress = int.Parse(textSectionMatch.Groups[1].Value, NumberStyles.HexNumber);
                         int textOffset = int.Parse(textSectionMatch.Groups[2].Value);
@@ -187,20 +193,17 @@ namespace EngineBinaryFileRewriter
 
                         if (dirty)
                         {
-                            var timestamp = new byte[12];
-                            using (var fs = File.OpenRead(libiPhonePath))
-                            {
-                                fs.Seek(24, SeekOrigin.Begin);
-                                fs.Read(timestamp, 0, timestamp.Length);
-                            }
-
-                            Utility.RunProcess("ar", $"r \"{libiPhonePath}\" \"{objectFilePath}\"");
-
                             using (var fs = File.OpenWrite(libiPhonePath))
                             {
-                                fs.Seek(24, SeekOrigin.Begin);
-                                fs.Write(timestamp, 0, timestamp.Length);
+                                var bytes = File.ReadAllBytes(objectFilePath);
+                                var item = library.GetItem(objectFile);
+                                Assert.AreEqual(item.Length, bytes.Length);
+
+                                fs.Seek(item.Offset, SeekOrigin.Begin);
+                                fs.Write(bytes, 0, bytes.Length);
                             }
+
+                            Debug.LogFormat("Replaced {0}", objectFilePath);
                         }
 
                         File.Delete(objectFilePath);
@@ -209,12 +212,14 @@ namespace EngineBinaryFileRewriter
             }
         }
 
-        private void ExtractThinLibrary(ToolSetIOS toolset, string path, string arch, string output)
+#if !UNITY_2020_1_OR_NEWER
+        private static void ExtractThinLibrary(ToolSetIOS toolset, string path, string arch, string output)
         {
             string temp = output + ".tmp";
             Utility.RunProcess(toolset.Lipo, $"-extract {arch} {path} -output {temp}");
             Utility.RunProcess(toolset.Lipo, $"-thin {arch} {temp} -output {output}");
             File.Delete(temp);
         }
+#endif
     }
 }

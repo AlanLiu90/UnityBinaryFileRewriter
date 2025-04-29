@@ -11,18 +11,11 @@
 支持Unity 2019~2022
 * Android
   * 只支持ARMv7、ARM64
-  * 支持的构建方式
-    * 直接构建apk/aab
-    * 先导出Gradle工程，再构建apk/aab
+  * 支持直接构建apk/aab，也支持先导出Gradle工程，再构建apk/aab
 * iOS
   * 只支持在设备上运行的版本，不支持模拟器版本
-  * 需要在Mac上导出Xcode工程，并且确保已安装以下命令行工具（一般是安装 Xcode Command Line Tools）：
-    * nm
-    * ar
-    * otool
-    * objdump
-    * c++filt
-    * lipo
+  * 支持在Windows、Mac和Linux上导出Xcode工程
+    * 2019只支持在Mac上导出
 
 ## 已配置功能
 项目可以将`ProjectSettings\EngineBinaryFileRewriterSettings.asset`拷贝到自己的工程中，并启用需要的功能

@@ -11,13 +11,15 @@ using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 
-public static class Utility
+internal static class Utility
 {
 #if UNITY_EDITOR_WIN
     private const string Cmp = "C:\\Program Files\\Git\\usr\\bin\\cmp.exe";
 #else
     private const string Cmp = "cmp";
 #endif
+
+    internal delegate (int, int)[] GetDiffsDelegate(string feature, BuildTarget target, Architecture architecture, bool development);
 
     public static readonly Dictionary<Architecture, string> AndroidArchitectures = new Dictionary<Architecture, string>()
     {
@@ -27,7 +29,7 @@ public static class Utility
         [Architecture.X86_64] = "x86_64",
     };
 
-    public static void EnableFeature(string name)
+    private static void EnableFeature(string name)
     {
         var feature = EngineBinaryFileRewriterSettings.Instance.CodeRewriterFeatures
             .Where(x => x.Name == name)
@@ -44,15 +46,7 @@ public static class Utility
         EngineBinaryFileRewriterSettings.Save();
     }
 
-    public static void ExtractThinLibrary(string path, string arch, string output)
-    {
-        string temp = output + ".tmp";
-        RunProcess("lipo", $"-extract {arch} {path} -output {temp}");
-        RunProcess("lipo", $"-thin {arch} {temp} -output {output}");
-        File.Delete(temp);
-    }
-
-    public static void CompareFiles(string file1, string file2, (int, int)[] expectedDiffs)
+    private static void CompareFiles(string file1, string file2, (int, int)[] expectedDiffs)
     {
         Assert.AreEqual(new FileInfo(file1).Length, new FileInfo(file2).Length);
 
@@ -97,7 +91,7 @@ public static class Utility
         }
     }
 
-    public static void Unzip(string fileName, string output)
+    private static void Unzip(string fileName, string output)
     {
         var executableName = Application.platform == RuntimePlatform.WindowsEditor ? "7z.exe" : "7za";
         var zipFileName = Path.GetFullPath(Path.Combine(EditorApplication.applicationContentsPath, "Tools", executableName));
@@ -107,7 +101,15 @@ public static class Utility
 
         var result = RunProcess(zipFileName, string.Format("x -o\"{0}\" \"{1}\"", output, fileName));
         if (result.Item1 != 0)
+        {
+#if !UNITY_2021_1_OR_NEWER
+            // If 'lib' directory was extracted, ignore errors
+            if (Directory.Exists(Path.Combine(output, "lib")))
+                return;
+#endif
+
             throw new Exception(result.Item3.ToString());
+        }
     }
 
     public static void BuildAndroid(string output, bool development, bool stripEngineCode, string feature, AndroidArchitecture architectures)
@@ -165,11 +167,13 @@ public static class Utility
 
     public static void BuildIOS(string output, bool development, string feature)
     {
+#if !UNITY_2020_1_OR_NEWER
         if (Application.platform != RuntimePlatform.OSXEditor)
         {
             Assert.Fail("Use macOS Editor to run the test");
             return;
         }
+#endif
 
         BuildTarget target = BuildTarget.iOS;
         BuildTarget activeTarget = EditorUserBuildSettings.activeBuildTarget;
@@ -207,36 +211,71 @@ public static class Utility
         }
     }
 
-    public static (int, int)[] GetDiffsInUIDAndGID(string file1, string file2)
+    public static void ValidateAndroid(string output, bool development, string feature, string backupDir, GetDiffsDelegate getDiffs)
     {
-        // [36, 42): UID
-        // [42, 48): GID
+        Func<string, string> getLibUnity;
 
-        byte[] buffer1 = new byte[12];
-
-        using (var fs = File.OpenRead(file1))
+        if (output.EndsWith(".apk", StringComparison.Ordinal))
         {
-            fs.Seek(36, SeekOrigin.Begin);
-            fs.Read(buffer1, 0, buffer1.Length);
+            string outputDir = Path.GetFileNameWithoutExtension(output);
+            Unzip(output, outputDir);
+
+            getLibUnity = archName => Path.Combine(outputDir, "lib", archName, "libunity.so");
+        }
+        else
+        {
+            getLibUnity = archName => Path.Combine(output, "unityLibrary/src/main/jniLibs", archName, "libunity.so");
         }
 
-        byte[] buffer2 = new byte[12];
+        int archCount = 0;
 
-        using (var fs = File.OpenRead(file2))
+        foreach (var kv in AndroidArchitectures)
         {
-            fs.Seek(36, SeekOrigin.Begin);
-            fs.Read(buffer2, 0, buffer2.Length);
+            var arch = kv.Key;
+            var archName = kv.Value;
+
+            var path = getLibUnity(archName);
+            if (File.Exists(path))
+            {
+                var diffs = getDiffs(feature, BuildTarget.Android, arch, development);
+
+                var backupPath = Path.Combine(backupDir, archName, "libunity.so");
+                CompareFiles(backupPath, path, diffs);
+
+                archCount++;
+            }
         }
 
-        var diffs = new List<(int, int)>();
+        Assert.AreEqual(2, archCount);
+    }
 
-        for (int i = 0; i < buffer1.Length; i++)
+    public static void ValidateIOS(string projectDir, bool development, string feature, GetDiffsDelegate getDiffs)
+    {
+        var path = Path.Combine(projectDir, "Libraries/libiPhone-lib.a");
+        var backupPath = path + ".bak";
+
+#if UNITY_2020_1_OR_NEWER
+        var diffs = getDiffs(feature, BuildTarget.iOS, Architecture.ARM64, development);
+
+        CompareFiles(backupPath, path, diffs);
+#else
+        var archs = new Architecture[] { Architecture.ARMv7, Architecture.ARM64 };
+
+        foreach (var arch in archs)
         {
-            if (buffer1[i] != buffer2[i])
-                diffs.Add((buffer1[i], buffer2[i]));
-        }
+            var diffs = getDiffs(feature, BuildTarget.iOS, arch, development);
 
-        return diffs.ToArray();
+            var archStr = arch.ToString().ToLowerInvariant();
+
+            string file1 = $"{archStr}.a";
+            string file2 = $"{archStr}.a.bak";
+
+            ExtractThinLibrary(path, archStr, file1);
+            ExtractThinLibrary(backupPath, archStr, file2);
+
+            CompareFiles(file2, file1, diffs);
+        }
+#endif
     }
 
     public static (int, string, string) RunProcess(string fileName, string args)
@@ -310,4 +349,14 @@ public static class Utility
 
         return null;
     }
+
+#if !UNITY_2020_1_OR_NEWER
+    private static void ExtractThinLibrary(string path, string arch, string output)
+    {
+        string temp = output + ".tmp";
+        RunProcess("lipo", $"-extract {arch} {path} -output {temp}");
+        RunProcess("lipo", $"-thin {arch} {temp} -output {output}");
+        File.Delete(temp);
+    }
+#endif
 }

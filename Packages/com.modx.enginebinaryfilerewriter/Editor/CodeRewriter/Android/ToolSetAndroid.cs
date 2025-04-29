@@ -71,7 +71,7 @@ namespace EngineBinaryFileRewriter
             else if (Application.platform == RuntimePlatform.OSXEditor)
                 llvmArch = "darwin-x86_64";
             else
-                llvmArch = "???";
+                llvmArch = "linux-x86_64";
 
             toolDir = Path.Combine(toolDir, $"PlaybackEngines/AndroidPlayer/NDK/toolchains/llvm/prebuilt/{llvmArch}/bin");
 

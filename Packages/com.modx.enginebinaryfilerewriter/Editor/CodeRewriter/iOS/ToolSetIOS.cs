@@ -1,5 +1,8 @@
 using System;
+using System.IO;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 namespace EngineBinaryFileRewriter
 {
@@ -7,52 +10,69 @@ namespace EngineBinaryFileRewriter
     {
         public string NM { get; private set; }
         public string AR { get; private set; }
-        public string OTool { get; private set; }
         public string ObjDump { get; private set; }
         public string CppFilt { get; private set; }
+        public string ReadElf { get; private set; }
+#if !UNITY_2020_1_OR_NEWER
         public string Lipo { get; private set; }
-
-        private readonly string mInstructionPattern;
+#endif
 
         public ToolSetIOS()
         {
-            if (string.IsNullOrEmpty(Utility.RunProcess("which", "nm")))
-                throw new Exception("Failed to find 'nm'");
+            NM = GetTool("llvm-nm");
+            AR = GetTool("llvm-ar");
+            ObjDump = GetTool("llvm-objdump");
+            CppFilt = GetTool("llvm-cxxfilt");
+            ReadElf = GetTool("llvm-readelf");
 
-            if (string.IsNullOrEmpty(Utility.RunProcess("which", "ar")))
-                throw new Exception("Failed to find 'ar'");
-
-            if (string.IsNullOrEmpty(Utility.RunProcess("which", "otool")))
-                throw new Exception("Failed to find 'otool'");
-
-            if (string.IsNullOrEmpty(Utility.RunProcess("which", "objdump")))
-                throw new Exception("Failed to find 'objdump'");
-
-            if (string.IsNullOrEmpty(Utility.RunProcess("which", "c++filt")))
-                throw new Exception("Failed to find 'c++filt'");
-
+#if !UNITY_2020_1_OR_NEWER
             if (string.IsNullOrEmpty(Utility.RunProcess("which", "lipo")))
                 throw new Exception("Failed to find 'lipo'");
 
-            NM = "nm";
-            AR = "ar";
-            OTool = "otool";
-            ObjDump = "objdump";
-            CppFilt = "c++filt";
             Lipo = "lipo";
-
-            mInstructionPattern = @"^\s+(\w+): {0}{1}{2}{3}\s+.*$";
+#endif
         }
 
         protected override string GetInstructionPattern(string machineCode)
         {
-            var pattern = string.Format(mInstructionPattern,
+            string format = @"^\s+(\w+): {0} {1} {2} {3}\s+.*$";
+
+            var pattern = string.Format(format,
                 Enumerable.Range(0, machineCode.Length / 2)
                     .Select(i => machineCode.Substring(i * 2, 2).ToLowerInvariant())
-                    .Reverse()
                     .ToArray());
 
             return pattern;
+        }
+
+        private static string GetTool(string tool)
+        {
+            string arch = "";
+
+            switch (Application.platform)
+            {
+                case RuntimePlatform.WindowsEditor:
+                    arch = "windows-x86_64";
+                    break;
+
+                case RuntimePlatform.OSXEditor:
+                    arch = "darwin-x86_64";
+                    break;
+
+                case RuntimePlatform.LinuxEditor:
+                    arch = "linux-x86_64";
+                    break;
+
+                default:
+                    throw new NotSupportedException($"{Application.platform}");
+            }
+
+            string toolPath = Path.GetFullPath($"Packages/com.modx.enginebinaryfilerewriter/Editor/Tools~/{arch}/{tool}");
+
+            if (Application.platform == RuntimePlatform.WindowsEditor)
+                toolPath += ".exe";
+
+            return toolPath;
         }
     }
 }
