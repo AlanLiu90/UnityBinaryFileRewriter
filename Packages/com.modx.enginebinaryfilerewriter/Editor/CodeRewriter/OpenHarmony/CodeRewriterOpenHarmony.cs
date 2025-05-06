@@ -1,3 +1,5 @@
+#if TUANJIE_1_0_OR_NEWER
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -5,20 +7,19 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
-using UnityEditor.Android;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
+using UnityEditor.OpenHarmony;
 using UnityEngine;
 
 namespace EngineBinaryFileRewriter
 {
-    internal sealed class CodeRewriterAndroid : IPreprocessBuildWithReport, IPostGenerateGradleAndroidProject
+    internal sealed class CodeRewriterOpenHarmony : IPreprocessBuildWithReport, IPostGenerateOpenHarmonyProject
     {
         private static readonly Dictionary<Architecture, string> mArchs = new Dictionary<Architecture, string>()
         {
             [Architecture.ARMv7] = "armeabi-v7a",
             [Architecture.ARM64] = "arm64-v8a",
-            [Architecture.X86] = "x86",
             [Architecture.X86_64] = "x86_64",
         };
 
@@ -28,13 +29,13 @@ namespace EngineBinaryFileRewriter
 
         public void OnPreprocessBuild(BuildReport report)
         {
-            if (report.summary.platform != UnityEditor.BuildTarget.Android)
+            if (report.summary.platform != UnityEditor.BuildTarget.OpenHarmony)
                 return;
 
             mDevelopmentBuild = (report.summary.options & BuildOptions.Development) != 0;
         }
 
-        public void OnPostGenerateGradleAndroidProject(string outputPath)
+        public void OnPostGenerateOpenHarmonyProject(string outputPath)
         {
             if (!Utility.ValidateEngineBinaryFileRewriterSettings())
                 return;
@@ -48,14 +49,14 @@ namespace EngineBinaryFileRewriter
             {
                 var arch = kv.Value;
 
-                var toolset = new ToolSetAndroid(kv.Key);
+                var toolset = new ToolSetOpenHarmony(kv.Key);
 
-                var libUnityPath = Path.Combine(outputPath, $"src/main/jniLibs/{arch}/{GetLibUnity()}.so");
+                var libUnityPath = Path.Combine(outputPath, $"libs/{arch}/libtuanjie.so");
 
                 if (!File.Exists(libUnityPath))
                     continue;
 
-                var rules = Utility.GetCodeRewriteRules(BuildTarget.Android, kv.Key, mDevelopmentBuild);
+                var rules = Utility.GetCodeRewriteRules(BuildTarget.OpenHarmony, kv.Key, mDevelopmentBuild);
                 if (!rules.Any())
                     continue;
 
@@ -88,7 +89,7 @@ namespace EngineBinaryFileRewriter
                             string symbolName = matchedLine.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Last();
 
                             string demangledSymbolName = Utility.RunProcess(toolset.CppFilt, symbolName).Trim();
-                            // Debug.Log(demangledSymbolName);
+                            Debug.Log(demangledSymbolName);
 
                             if (symbol.DemangledName != demangledSymbolName)
                                 continue;
@@ -149,32 +150,18 @@ namespace EngineBinaryFileRewriter
 
         private string GetLibUnitySymbol(string arch)
         {
-            string path;
-            var libUnity = GetLibUnity();
+            var path = EditorApplication.applicationContentsPath;
 
-            if (PlayerSettings.stripEngineCode)
-            {
-#if UNITY_2021_1_OR_NEWER
-                path = $"Library/Bee/artifacts/Android/{libUnity}/{arch}/{libUnity}.sym.so";
-#else
-                path = $"Temp/StagingArea/symbols/{arch}/{libUnity}.sym.so";
-#endif
-            }
-            else
-            {
-                path = EditorApplication.applicationContentsPath;
+            if (Application.platform == RuntimePlatform.OSXEditor)
+                path = Path.Combine(path, "../..");
 
-                if (Application.platform == RuntimePlatform.OSXEditor)
-                    path = Path.Combine(path, "../..");
-
-                string type = mDevelopmentBuild ? "Development" : "Release";
-                path = Path.Combine(path, $"PlaybackEngines/AndroidPlayer/Variations/il2cpp/{type}/Symbols/{arch}/{libUnity}.sym.so");
-            }
+            string type = mDevelopmentBuild ? "Development" : "Release";
+            path = Path.Combine(path, $"PlaybackEngines/OpenHarmonyPlayer/Variations/il2cpp/{type}/Symbols/{arch}/libtuanjie.sym.so");
 
             return path;
         }
 
-        private string DisassembleSymbol(ToolSetAndroid toolset, string libUnityPath, Architecture architecture, string text)
+        private string DisassembleSymbol(ToolSetOpenHarmony toolset, string libUnityPath, Architecture architecture, string text)
         {
             string[] words = text.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -186,26 +173,9 @@ namespace EngineBinaryFileRewriter
             int address = int.Parse(symbolAddress, NumberStyles.HexNumber);
             int size = int.Parse(symbolSize, NumberStyles.HexNumber);
 
-            string arguments = $"--start-address=0x{address:x} --stop-address=0x{address + size:x}";
-
-#if UNITY_2022_1_OR_NEWER
-            if (architecture == Architecture.ARMv7)
-                arguments += " --triple=thumb";
-#else
-            if (architecture == Architecture.ARMv7)
-                arguments += " -Mforce-thumb";
-#endif
-
-            return Utility.RunProcess(toolset.ObjDump, $"{arguments} -d \"{libUnityPath}\"");
-        }
-
-        private static string GetLibUnity()
-        {
-#if TUANJIE_1_0_OR_NEWER
-            return "libtuanjie";
-#else
-            return "libunity";
-#endif
+            return Utility.RunProcess(toolset.ObjDump, $"--start-address=0x{address:x} --stop-address=0x{address + size:x} -d \"{libUnityPath}\"");
         }
     }
 }
+
+#endif

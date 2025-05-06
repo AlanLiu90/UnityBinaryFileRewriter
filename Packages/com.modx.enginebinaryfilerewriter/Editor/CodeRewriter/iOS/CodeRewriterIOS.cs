@@ -18,7 +18,7 @@ namespace EngineBinaryFileRewriter
 
         public void OnPostprocessBuild(BuildReport report)
         {
-            if (report.summary.platform != BuildTarget.iOS)
+            if (report.summary.platform != UnityEditor.BuildTarget.iOS)
                 return;
 
             if (PlayerSettings.iOS.sdkVersion != iOSSdkVersion.DeviceSDK)

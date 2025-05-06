@@ -77,12 +77,12 @@ namespace EngineBinaryFileRewriter
             var features = GetEnabledFeatures();
 
             if (!features.Any())
-                return $"No feature is enabled for {Application.unityVersion}";
+                return $"No feature is enabled for {Utility.GetUnityVersion()}";
 
             var sb = mStringBuilder;
             sb.Clear();
 
-            sb.AppendFormat("The following feature(s) are enabled for {0}:", Application.unityVersion);
+            sb.AppendFormat("The following feature(s) are enabled for {0}:", Utility.GetUnityVersion());
             sb.AppendLine();
 
             int index = 1;
@@ -104,7 +104,7 @@ namespace EngineBinaryFileRewriter
 
         private IEnumerable<(string, string[])> GetEnabledFeatures()
         {
-            var unityVersion = Application.unityVersion;
+            var unityVersion = Utility.GetUnityVersion();
             var features = EngineBinaryFileRewriterSettings.Instance.CodeRewriterFeatures;
 
             if (features == null)

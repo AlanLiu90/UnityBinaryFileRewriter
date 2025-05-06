@@ -62,9 +62,18 @@ namespace EngineBinaryFileRewriter
             }
         }
 
+        public static string GetUnityVersion()
+        {
+#if TUANJIE_1_0_OR_NEWER
+            return Application.tuanjieVersion;
+#else
+            return Application.unityVersion;
+#endif
+        }
+
         public static IEnumerable<(string, CodeRewriterRule)> GetCodeRewriteRules(BuildTarget buildTarget, Architecture architecture, bool development)
         {
-            var unityVersion = Application.unityVersion;
+            var unityVersion = GetUnityVersion();
             var features = EngineBinaryFileRewriterSettings.Instance.CodeRewriterFeatures;
 
             if (features == null)
@@ -134,11 +143,6 @@ namespace EngineBinaryFileRewriter
 
                         foreach (var rule in ruleSet.Rules)
                         {
-                            if (!IsValidBuildTarget(rule.BuildTarget))
-                            {
-                                errors.Add($"Invalid build target: {rule.BuildTarget}");
-                            }
-
                             foreach (var symbol in rule.Symbols)
                             {
                                 if (string.IsNullOrEmpty(symbol.Pattern))
@@ -183,11 +187,6 @@ namespace EngineBinaryFileRewriter
                 errorMessage = sb.ToString();
 
             return errorMessage.Length == 0;
-        }
-
-        private static bool IsValidBuildTarget(BuildTarget target)
-        {
-            return target == BuildTarget.Android || target == BuildTarget.iOS;
         }
 
         private static bool ValidateMachineCode(string code, Architecture architecture)

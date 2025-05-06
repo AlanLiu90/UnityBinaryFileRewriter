@@ -10,6 +10,7 @@ using HybridCLR.Editor.Commands;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
+using BuildTarget = UnityEditor.BuildTarget;
 
 internal static class Utility
 {
@@ -211,20 +212,79 @@ internal static class Utility
         }
     }
 
+#if TUANJIE_1_0_OR_NEWER
+    public static void BuildOpenHarmony(string output, bool development, string feature, OpenHarmonyArchitecture architectures)
+    {
+        BuildTarget target = BuildTarget.OpenHarmony;
+        BuildTarget activeTarget = EditorUserBuildSettings.activeBuildTarget;
+        if (activeTarget != BuildTarget.OpenHarmony)
+        {
+            Assert.Fail("Switch to OpenHarmony platform before running the test");
+            return;
+        }
+
+        if (output.EndsWith(".hap", StringComparison.Ordinal))
+        {
+            if (File.Exists(output))
+                File.Delete(output);
+
+            EditorUserBuildSettings.exportAsOpenHarmonyProject = false;
+        }
+        else
+        {
+            if (Directory.Exists(output))
+                Directory.Delete(output, true);
+
+            EditorUserBuildSettings.exportAsOpenHarmonyProject = true;
+        }
+
+        PlayerSettings.OpenHarmony.targetArchitectures = architectures;
+
+        var buildOptions = BuildOptions.CompressWithLz4;
+        if (development)
+            buildOptions |= BuildOptions.Development;
+
+        PrebuildCommand.GenerateAll();
+
+        BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions()
+        {
+            scenes = new string[] { "Assets/Scenes/main.unity" },
+            locationPathName = output,
+            options = buildOptions,
+            target = target,
+            targetGroup = BuildTargetGroup.OpenHarmony,
+        };
+
+        EnableFeature(feature);
+
+        var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+        if (report.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded)
+        {
+            Assert.Fail("Failed to build");
+            return;
+        }
+    }
+#endif
+
     public static void ValidateAndroid(string output, bool development, string feature, string backupDir, GetDiffsDelegate getDiffs)
     {
         Func<string, string> getLibUnity;
+        var libUnity = GetLibUnity();
 
         if (output.EndsWith(".apk", StringComparison.Ordinal))
         {
             string outputDir = Path.GetFileNameWithoutExtension(output);
             Unzip(output, outputDir);
 
-            getLibUnity = archName => Path.Combine(outputDir, "lib", archName, "libunity.so");
+            getLibUnity = archName => Path.Combine(outputDir, "lib", archName, libUnity);
         }
         else
         {
-            getLibUnity = archName => Path.Combine(output, "unityLibrary/src/main/jniLibs", archName, "libunity.so");
+#if TUANJIE_1_0_OR_NEWER
+            getLibUnity = archName => Path.Combine(output, "tuanjieLibrary/src/main/jniLibs", archName, libUnity);
+#else
+            getLibUnity = archName => Path.Combine(output, "unityLibrary/src/main/jniLibs", archName, libUnity);
+#endif
         }
 
         int archCount = 0;
@@ -239,7 +299,7 @@ internal static class Utility
             {
                 var diffs = getDiffs(feature, BuildTarget.Android, arch, development);
 
-                var backupPath = Path.Combine(backupDir, archName, "libunity.so");
+                var backupPath = Path.Combine(backupDir, archName, libUnity);
                 CompareFiles(backupPath, path, diffs);
 
                 archCount++;
@@ -277,6 +337,47 @@ internal static class Utility
         }
 #endif
     }
+
+#if TUANJIE_1_0_OR_NEWER
+    public static void ValidateOpenHarmony(string output, bool development, string feature, string backupDir, GetDiffsDelegate getDiffs)
+    {
+        Func<string, string> getLibUnity;
+        var libUnity = "libtuanjie.so";
+
+        if (output.EndsWith(".hap", StringComparison.Ordinal))
+        {
+            string outputDir = Path.GetFileNameWithoutExtension(output);
+            Unzip(output, outputDir);
+
+            getLibUnity = archName => Path.Combine(outputDir, "libs", archName, libUnity);
+        }
+        else
+        {
+            getLibUnity = archName => Path.Combine(output, "entry/libs", archName, libUnity);
+        }
+
+        int archCount = 0;
+
+        foreach (var kv in AndroidArchitectures)
+        {
+            var arch = kv.Key;
+            var archName = kv.Value;
+
+            var path = getLibUnity(archName);
+            if (File.Exists(path))
+            {
+                var diffs = getDiffs(feature, BuildTarget.OpenHarmony, arch, development);
+
+                var backupPath = Path.Combine(backupDir, archName, libUnity);
+                CompareFiles(backupPath, path, diffs);
+
+                archCount++;
+            }
+        }
+
+        Assert.AreEqual(2, archCount);
+    }
+#endif
 
     public static (int, string, string) RunProcess(string fileName, string args)
     {
@@ -333,7 +434,13 @@ internal static class Utility
         if (feature.RuleSets == null)
             return null;
 
-        var ruleSet = feature.RuleSets.Where(x => Regex.IsMatch(Application.unityVersion, x.UnityVersion)).FirstOrDefault();
+#if TUANJIE_1_0_OR_NEWER
+        var unityVersion = Application.tuanjieVersion;
+#else
+        var unityVersion = Application.unityVersion;
+#endif
+
+        var ruleSet = feature.RuleSets.Where(x => Regex.IsMatch(unityVersion, x.UnityVersion)).FirstOrDefault();
         if (ruleSet == null)
             return null;
 
@@ -341,13 +448,22 @@ internal static class Utility
             return null;
 
         var rule = ruleSet.Rules
-            .Where(x => x.BuildTarget == buildTarget && x.Architecture == architecture && x.Development == development)
+            .Where(x => x.BuildTarget == (EngineBinaryFileRewriter.BuildTarget)buildTarget && x.Architecture == architecture && x.Development == development)
             .FirstOrDefault();
 
         if (rule != null && rule.Symbols != null && rule.Symbols.Length > 0)
             return rule;
 
         return null;
+    }
+
+    public static string GetLibUnity()
+    {
+#if TUANJIE_1_0_OR_NEWER
+        return "libtuanjie.so";
+#else
+        return "libunity.so";
+#endif
     }
 
 #if !UNITY_2020_1_OR_NEWER

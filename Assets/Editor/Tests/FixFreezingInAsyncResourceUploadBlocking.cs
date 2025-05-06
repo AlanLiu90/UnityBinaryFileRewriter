@@ -1,18 +1,16 @@
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using EngineBinaryFileRewriter;
 using NUnit.Framework;
 using UnityEditor;
-using UnityEngine;
+using BuildTarget = UnityEditor.BuildTarget;
 
 public class FixFreezingInAsyncResourceUploadBlocking
 {
     private const string Feature = "Fix Freezing in AsyncResourceUploadBlocking";
     private const string GradleProjectDir = "GradleProject_" + nameof(FixFreezingInAsyncResourceUploadBlocking);
     private const string Apk = nameof(FixFreezingInAsyncResourceUploadBlocking) + ".apk";
-    private const string AndroidBackupDir = "Backup_" + nameof(FixFreezingInAsyncResourceUploadBlocking);
+    private const string AndroidBackupDir = "AndroidBackup_" + nameof(FixFreezingInAsyncResourceUploadBlocking);
     private const string XcodeProjectDir = "XcodeProject_" + nameof(FixFreezingInAsyncResourceUploadBlocking);
     private const AndroidArchitecture TargetAndroidArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.ARM64;
 

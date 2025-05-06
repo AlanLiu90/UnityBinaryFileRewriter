@@ -16,7 +16,7 @@ MonoBehaviour:
   - Name: Disable Asset Bundle Compatibility Checks
     Enable: 0
     RuleSets:
-    - UnityVersion: (?:2021|2022).*
+    - UnityVersion: ^(2021|2022)\.
       Rules:
       - BuildTarget: 13
         Development: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #0x1b8]
             NewMachineCode: 7FE20639
-    - UnityVersion: (?:2019|2020).*
+    - UnityVersion: ^(2019|2020)\.
       Rules:
       - BuildTarget: 13
         Development: 0
@@ -188,10 +188,132 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #0x1b8]
             NewMachineCode: 7FE20639
+    - UnityVersion: ^1\.
+      Rules:
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb r0, [r6, #28]
+            OriginalMachineCode: 3077
+            Index: -1
+            NewInstructionDescription: strb r5, [r6, #28]
+            NewMachineCode: 3577
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w23, [x19, #376]
+            OriginalMachineCode: 77e20539
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #376]
+            NewMachineCode: 7fe20539
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #408]
+            OriginalMachineCode: 68620639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #408]
+            NewMachineCode: 7F620639
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb.w r0, [r5, #36]
+            OriginalMachineCode: 85F82400
+            Index: -1
+            NewInstructionDescription: strb.w r6, [r5, #36]
+            NewMachineCode: 85F82460
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w26, [x19, #416]
+            OriginalMachineCode: 7A820639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #416]
+            NewMachineCode: 7F820639
+      - BuildTarget: 9
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #448]
+            OriginalMachineCode: 68020739
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #448]
+            NewMachineCode: 7F020739
+      - BuildTarget: 48
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb r0, [r4, #252]
+            OriginalMachineCode: FC00C4E5
+            Index: -1
+            NewInstructionDescription: strb r5, [r4, #252]
+            NewMachineCode: FC50C4E5
+      - BuildTarget: 48
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #384]
+            OriginalMachineCode: 68020639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #384]
+            NewMachineCode: 7F020639
+      - BuildTarget: 48
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb r0, [r4, #292]
+            OriginalMachineCode: 2401C4E5
+            Index: -1
+            NewInstructionDescription: strb r6, [r4, #292]
+            NewMachineCode: 2461C4E5
+      - BuildTarget: 48
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #424]
+            OriginalMachineCode: 68A20639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #424]
+            NewMachineCode: 7FA20639
   - Name: Fix Freezing in AsyncResourceUploadBlocking
     Enable: 0
     RuleSets:
-    - UnityVersion: 2022.*
+    - UnityVersion: ^2022\.
       Rules:
       - BuildTarget: 9
         Development: 0

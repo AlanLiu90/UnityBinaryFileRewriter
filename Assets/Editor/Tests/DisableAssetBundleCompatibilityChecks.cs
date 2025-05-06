@@ -1,20 +1,25 @@
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using EngineBinaryFileRewriter;
 using NUnit.Framework;
 using UnityEditor;
-using UnityEngine;
+using BuildTarget = UnityEditor.BuildTarget;
 
 public class DisableAssetBundleCompatibilityChecks
 {
     private const string Feature = "Disable Asset Bundle Compatibility Checks";
     private const string GradleProjectDir = "GradleProject_" + nameof(DisableAssetBundleCompatibilityChecks);
     private const string Apk = nameof(DisableAssetBundleCompatibilityChecks) + ".apk";
-    private const string AndroidBackupDir = "Backup_" + nameof(DisableAssetBundleCompatibilityChecks);
+    private const string AndroidBackupDir = "AndroidBackup_" + nameof(DisableAssetBundleCompatibilityChecks);
     private const string XcodeProjectDir = "XcodeProject_" + nameof(DisableAssetBundleCompatibilityChecks);
     private const AndroidArchitecture TargetAndroidArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.ARM64;
+
+#if TUANJIE_1_0_OR_NEWER
+    private const string OpenHarmonyProjectDir = "OpenHarmony_" + nameof(DisableAssetBundleCompatibilityChecks);
+    private const string Hap = nameof(DisableAssetBundleCompatibilityChecks) + ".hap";
+    private const string OpenHarmonyBackupDir = "OpenHarmonyBackup_" + nameof(DisableAssetBundleCompatibilityChecks);
+    private const OpenHarmonyArchitecture TargetOpenHarmonyArchitectures = OpenHarmonyArchitecture.ARMv7 | OpenHarmonyArchitecture.ARM64;
+#endif
 
     [Test]
     public void TestAndroidGradleProject([Values] bool development, [Values] bool stripEngineCode)
@@ -45,6 +50,30 @@ public class DisableAssetBundleCompatibilityChecks
 
         Utility.ValidateIOS(XcodeProjectDir, development, Feature, GetDiffs);
     }
+
+#if TUANJIE_1_0_OR_NEWER
+    [Test]
+    public void TestOpenHarmonyProject([Values] bool development)
+    {
+        using (var scope = BackupLibUnity.CreateScope(OpenHarmonyBackupDir))
+        {
+            Utility.BuildOpenHarmony(OpenHarmonyProjectDir, development, Feature, TargetOpenHarmonyArchitectures);
+        }
+
+        Utility.ValidateOpenHarmony(OpenHarmonyProjectDir, development, Feature, OpenHarmonyBackupDir, GetDiffs);
+    }
+
+    [Test]
+    public void TestOpenHarmonyHap([Values] bool development)
+    {
+        using (var scope = BackupLibUnity.CreateScope(OpenHarmonyBackupDir))
+        {
+            Utility.BuildOpenHarmony(Hap, development, Feature, TargetOpenHarmonyArchitectures);
+        }
+
+        Utility.ValidateOpenHarmony(Hap, development, Feature, OpenHarmonyBackupDir, GetDiffs);
+    }
+#endif
 
     private static (int, int)[] GetDiffs(string feature, BuildTarget target, Architecture architecture, bool development)
     {

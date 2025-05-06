@@ -73,6 +73,20 @@ namespace HybridCLR.Editor
             BuildAssets_iOS_();
         }
 
+#if TUANJIE_1_0_OR_NEWER
+        [MenuItem("Build/OpenHarmony")]
+        public static void Build_OpenHarmony()
+        {
+            Build_OpenHarmony(false);
+        }
+
+        [MenuItem("Build/OpenHarmony_Assets")]
+        public static void BuildAssets_OpenHarmony()
+        {
+            BuildAssets_OpenHarmony_();
+        }
+#endif
+
         public static void Build_Win64(bool exitWhenCompleted)
         {
             BuildTarget target = BuildTarget.StandaloneWindows64;
@@ -239,6 +253,72 @@ namespace HybridCLR.Editor
             BuildAssetsCommand.BuildAndCopyABAOTHotUpdateDlls();
             CopyDir(Application.streamingAssetsPath, $"{outputPath}/HybridCLRTrial/Data/Raw", true, false);
         }
+
+#if TUANJIE_1_0_OR_NEWER
+        public static void Build_OpenHarmony(bool exitWhenCompleted)
+        {
+            BuildTarget target = BuildTarget.OpenHarmony;
+            BuildTarget activeTarget = EditorUserBuildSettings.activeBuildTarget;
+            if (activeTarget != BuildTarget.OpenHarmony)
+            {
+                Debug.LogError("请先切到OpenHarmony平台再打包");
+                return;
+            }
+
+#if EXPORT_AS_GRADLE_PROJECT
+            // Get filename.
+            string outputPath = $"{SettingsUtil.ProjectDir}/OpenHarmonyProject";
+
+            string location = $"{outputPath}/HybridCLRTrial";
+
+            EditorUserBuildSettings.exportAsOpenHarmonyProject = true;
+#else
+            string outputPath = $"{SettingsUtil.ProjectDir}/HybridCLRTrial.hap";
+
+            string location = $"{outputPath}";
+
+            EditorUserBuildSettings.exportAsOpenHarmonyProject = false;
+#endif
+
+            var buildOptions = BuildOptions.CompressWithLz4;
+
+            PrebuildCommand.GenerateAll();
+            Debug.Log("====> Build App");
+
+            BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions()
+            {
+                scenes = new string[] { "Assets/Scenes/main.unity" },
+                locationPathName = location,
+                options = buildOptions,
+                target = target,
+                targetGroup = BuildTargetGroup.OpenHarmony,
+            };
+
+            var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+            if (report.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded)
+            {
+                Debug.LogError("打包失败");
+                if (exitWhenCompleted)
+                {
+                    EditorApplication.Exit(1);
+                }
+                return;
+            }
+
+#if EXPORT_AS_GRADLE_PROJECT
+            BuildAssets_OpenHarmony_();
+#endif
+        }
+
+        public static void BuildAssets_OpenHarmony_()
+        {
+            string outputPath = $"{SettingsUtil.ProjectDir}/OpenHarmonyProject";
+
+            Debug.Log("====> 复制热更新资源和代码");
+            BuildAssetsCommand.BuildAndCopyABAOTHotUpdateDlls();
+            CopyDir(Application.streamingAssetsPath, $"{outputPath}/HybridCLRTrial/entry/src/main/resources/rawfile/Data/StreamingAssets", true, false);
+        }
+#endif
 
         private static void CopyWithCheckLongFile(string srcFile, string dstFile)
         {
