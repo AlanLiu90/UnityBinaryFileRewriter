@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using EngineBinaryFileRewriter;
-using HybridCLR.Editor.Commands;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -145,11 +144,9 @@ internal static class Utility
         if (development)
             buildOptions |= BuildOptions.Development;
 
-        PrebuildCommand.GenerateAll();
-
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions()
         {
-            scenes = new string[] { "Assets/Scenes/main.unity" },
+            scenes = new string[] { "Assets/Scenes/SampleScene.unity" },
             locationPathName = output,
             options = buildOptions,
             target = target,
@@ -191,11 +188,9 @@ internal static class Utility
         if (development)
             buildOptions |= BuildOptions.Development;
 
-        PrebuildCommand.GenerateAll();
-
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions()
         {
-            scenes = new string[] { "Assets/Scenes/main.unity" },
+            scenes = new string[] { "Assets/Scenes/SampleScene.unity" },
             locationPathName = output,
             options = buildOptions,
             target = target,

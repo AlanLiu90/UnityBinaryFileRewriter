@@ -4,7 +4,7 @@
 本工具用于重写Unity引擎的二进制文件，在没有源码的情况下，可以用它实现一些功能、修复一些问题
 
 ## 使用
-1. 引用包com.modx.enginebinaryfilerewriter，参考格式：https://github.com/AlanLiu90/UnityBinaryFileRewriter.git?path=Packages/com.modx.enginebinaryfilerewriter#v0.5.0
+1. 引用包com.modx.enginebinaryfilerewriter，参考格式：https://github.com/AlanLiu90/UnityBinaryFileRewriter.git?path=src/UnityBinaryFileRewriter/Packages/com.modx.enginebinaryfilerewriter#v0.7.0
 2. 在 Project Settings -> Engine Binary File Rewriter 中进行配置。配置方式可参考[文章](https://alanliu90.hatenablog.com/entry/2025/04/23/Unity%E4%B8%AD%E5%85%A8%E5%B1%80%E7%A6%81%E7%94%A8AssetBundle%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7%E6%A3%80%E6%9F%A5)
 
 ### 支持说明
@@ -38,7 +38,7 @@ req.SetEnableCompatibilityChecks(false); // Non-public, needs to be called by re
 * 2019.4.40
 
 #### 在设备上测试配置的正确性（以Android为例，iOS类似）
-1. 在Project Settings -> Engine Binary File Rewriter中，开启这个功能
+1. 打开工程：demo\HybridCLRTrial
 2. 执行菜单项Build -> Android
 3. 使用Android Studio打开Gradle工程，构建并安装到设备上。运行时可以看到一条日志：`[InstantiateByAsset] text:..., 这个脚本通过挂载到资源的方式实例化`
 4. 修改Assets\HotUpdate\InstantiateByAsset.cs，注释第一行代码

@@ -8,9 +8,9 @@
       "hash": "de7b60695a4b7b42cc6a96cb98a3cd8144ef04d0"
     },
     "com.modx.enginebinaryfilerewriter": {
-      "version": "file:com.modx.enginebinaryfilerewriter",
+      "version": "file:../../../src/UnityBinaryFileRewriter/Packages/com.modx.enginebinaryfilerewriter",
       "depth": 0,
-      "source": "embedded",
+      "source": "local",
       "dependencies": {}
     },
     "com.unity.ext.nunit": {

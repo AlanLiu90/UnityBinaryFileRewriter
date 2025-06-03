@@ -426,3 +426,116 @@ MonoBehaviour:
             Index: 0
             NewInstructionDescription: b
             NewMachineCode: DDE7
+  - Name: Warmup Only The First Valid SubShader
+    Enable: 0
+    RuleSets:
+    - UnityVersion: ^2022\.
+      Rules:
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__ndk1::less<ShaderVariantCollection::VariantInfo>,
+            std::__ndk1::allocator<ShaderVariantCollection::VariantInfo> > const&,
+            WarmupPassSetup const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*,
+            int, int, ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned int,
+            unsigned int)
+          Pattern: ^.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b #52
+            OriginalMachineCode: 1AE0
+            Index: -1
+            NewInstructionDescription: b #58
+            NewMachineCode: 1DE0
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__ndk1::less<ShaderVariantCollection::VariantInfo>,
+            std::__ndk1::allocator<ShaderVariantCollection::VariantInfo> > const&,
+            WarmupPassSetup const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*,
+            int, int, ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned long,
+            unsigned long)
+          Pattern: ^.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b 0x8a5de4
+            OriginalMachineCode: 06000014
+            Index: -1
+            NewInstructionDescription: b 0x8a5df0
+            NewMachineCode: 09000014
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__1::less<ShaderVariantCollection::VariantInfo>,
+            std::__1::allocator<ShaderVariantCollection::VariantInfo> > const&, WarmupPassSetup
+            const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*, int, int,
+            ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned long,
+            unsigned long)
+          Pattern: ^.*\.a:(.*\.o):.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b 0x2828
+            OriginalMachineCode: 04000014
+            Index: -1
+            NewInstructionDescription: b 0x2838
+            NewMachineCode: 08000014
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__ndk1::less<ShaderVariantCollection::VariantInfo>,
+            std::__ndk1::allocator<ShaderVariantCollection::VariantInfo> > const&,
+            WarmupPassSetup const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*,
+            int, int, ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned int,
+            unsigned int)
+          Pattern: ^.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b #52
+            OriginalMachineCode: 1AE0
+            Index: -1
+            NewInstructionDescription: b #58
+            NewMachineCode: 1DE0
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__ndk1::less<ShaderVariantCollection::VariantInfo>,
+            std::__ndk1::allocator<ShaderVariantCollection::VariantInfo> > const&,
+            WarmupPassSetup const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*,
+            int, int, ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned long,
+            unsigned long)
+          Pattern: ^.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b 0xf37c14
+            OriginalMachineCode: 04000014
+            Index: -1
+            NewInstructionDescription: b 0xf37c20
+            NewMachineCode: 07000014
+      - BuildTarget: 9
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__1::less<ShaderVariantCollection::VariantInfo>,
+            std::__1::allocator<ShaderVariantCollection::VariantInfo> > const&, WarmupPassSetup
+            const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*, int, int,
+            ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned long,
+            unsigned long)
+          Pattern: ^.*\.a:(.*\.o):.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b 0x28c4
+            OriginalMachineCode: 04000014
+            Index: -1
+            NewInstructionDescription: b 0x28d4
+            NewMachineCode: 08000014

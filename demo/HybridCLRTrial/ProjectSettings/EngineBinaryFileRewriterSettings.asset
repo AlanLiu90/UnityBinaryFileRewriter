@@ -1,0 +1,541 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e38232831e15146a46276913ada7d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CodeRewriterFeatures:
+  - Name: Disable Asset Bundle Compatibility Checks
+    Enable: 1
+    RuleSets:
+    - UnityVersion: ^(2021|2022)\.
+      Rules:
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb r0, [r6, #28]
+            OriginalMachineCode: 3077
+            Index: -1
+            NewInstructionDescription: strb r5, [r6, #28]
+            NewMachineCode: 3577
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w23, [x19, #376]
+            OriginalMachineCode: 77e20539
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #376]
+            NewMachineCode: 7fe20539
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #0x190]
+            OriginalMachineCode: 68420639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #0x190]
+            NewMachineCode: 7f420639
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb.w r0, [r5, #36]
+            OriginalMachineCode: 85F82400
+            Index: -1
+            NewInstructionDescription: strb.w r6, [r5, #36]
+            NewMachineCode: 85F82460
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w26, [x19, #416]
+            OriginalMachineCode: 7A820639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #416]
+            NewMachineCode: 7F820639
+      - BuildTarget: 9
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #0x1b8]
+            OriginalMachineCode: 68E20639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #0x1b8]
+            NewMachineCode: 7FE20639
+    - UnityVersion: ^(2019|2020)\.
+      Rules:
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb r0, [r6, #28]
+            OriginalMachineCode: 3077
+            Index: -1
+            NewInstructionDescription: strb r7, [r6, #28]
+            NewMachineCode: 3777
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #376]
+            OriginalMachineCode: 68E20539
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #376]
+            NewMachineCode: 7fe20539
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: mov r1, #1
+            OriginalMachineCode: 0110A0E3
+            Index: -1
+            NewInstructionDescription: mov r1, #0
+            NewMachineCode: 0010A0E3
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #0x190]
+            OriginalMachineCode: 68420639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #0x190]
+            NewMachineCode: 7f420639
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb.w r0, [r4, #36]
+            OriginalMachineCode: 84F82400
+            Index: -1
+            NewInstructionDescription: strb.w r7, [r4, #36]
+            NewMachineCode: 84F82470
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19,#416]
+            OriginalMachineCode: 68820639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19,#416]
+            NewMachineCode: 7F820639
+      - BuildTarget: 9
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: mov r1, #1
+            OriginalMachineCode: 0110A0E3
+            Index: -1
+            NewInstructionDescription: mov r1, #0
+            NewMachineCode: 0010A0E3
+      - BuildTarget: 9
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #0x1b8]
+            OriginalMachineCode: 68E20639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #0x1b8]
+            NewMachineCode: 7FE20639
+    - UnityVersion: ^1\.
+      Rules:
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb r0, [r6, #28]
+            OriginalMachineCode: 3077
+            Index: -1
+            NewInstructionDescription: strb r5, [r6, #28]
+            NewMachineCode: 3577
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w23, [x19, #376]
+            OriginalMachineCode: 77e20539
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #376]
+            NewMachineCode: 7fe20539
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #408]
+            OriginalMachineCode: 68620639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #408]
+            NewMachineCode: 7F620639
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb.w r0, [r5, #36]
+            OriginalMachineCode: 85F82400
+            Index: -1
+            NewInstructionDescription: strb.w r6, [r5, #36]
+            NewMachineCode: 85F82460
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w26, [x19, #416]
+            OriginalMachineCode: 7A820639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #416]
+            NewMachineCode: 7F820639
+      - BuildTarget: 9
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*\.a:(.*\.o):.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #448]
+            OriginalMachineCode: 68020739
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #448]
+            NewMachineCode: 7F020739
+      - BuildTarget: 48
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb r0, [r4, #252]
+            OriginalMachineCode: FC00C4E5
+            Index: -1
+            NewInstructionDescription: strb r5, [r4, #252]
+            NewMachineCode: FC50C4E5
+      - BuildTarget: 48
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #384]
+            OriginalMachineCode: 68020639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #384]
+            NewMachineCode: 7F020639
+      - BuildTarget: 48
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb r0, [r4, #292]
+            OriginalMachineCode: 2401C4E5
+            Index: -1
+            NewInstructionDescription: strb r6, [r4, #292]
+            NewMachineCode: 2461C4E5
+      - BuildTarget: 48
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
+          Instructions:
+          - OriginalInstructionDescription: strb w8, [x19, #424]
+            OriginalMachineCode: 68A20639
+            Index: -1
+            NewInstructionDescription: strb wzr, [x19, #424]
+            NewMachineCode: 7FA20639
+  - Name: Fix Freezing in AsyncResourceUploadBlocking
+    Enable: 0
+    RuleSets:
+    - UnityVersion: ^2022\.
+      Rules:
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*\.a:(.*\.o):.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp w12, w9
+            OriginalMachineCode: 9F01096B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.eq
+            OriginalMachineCode: E0020054
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: cmp w12, w11
+            OriginalMachineCode: 9F010B6B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.ne
+            OriginalMachineCode: A1FDFF54
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: mov w0, #0x0
+            OriginalMachineCode: 00008052
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b
+            OriginalMachineCode: 03000014
+            Index: -1
+            NewInstructionDescription: b
+            NewMachineCode: E5FFFF17
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp w12, w9
+            OriginalMachineCode: 9F01096B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.eq
+            OriginalMachineCode: E0020054
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: cmp w12, w11
+            OriginalMachineCode: 9F010B6B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.ne
+            OriginalMachineCode: A1FDFF54
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: mov w0, wzr
+            OriginalMachineCode: E0031F2A
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b
+            OriginalMachineCode: 03000014
+            Index: -1
+            NewInstructionDescription: b
+            NewMachineCode: E5FFFF17
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp r3, r2
+            OriginalMachineCode: 9342
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: beq #54
+            OriginalMachineCode: 1BD0
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: cmp r3, r1
+            OriginalMachineCode: 8B42
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: bne #-52
+            OriginalMachineCode: E6D1
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: movs r0, #0
+            OriginalMachineCode: 0020
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: pop {r4, pc}
+            OriginalMachineCode: 10BD
+            Index: 0
+            NewInstructionDescription: b
+            NewMachineCode: DDE7
+  - Name: Warmup Only The First Valid SubShader
+    Enable: 0
+    RuleSets:
+    - UnityVersion: ^2022\.
+      Rules:
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__ndk1::less<ShaderVariantCollection::VariantInfo>,
+            std::__ndk1::allocator<ShaderVariantCollection::VariantInfo> > const&,
+            WarmupPassSetup const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*,
+            int, int, ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned int,
+            unsigned int)
+          Pattern: ^.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b #52
+            OriginalMachineCode: 1AE0
+            Index: -1
+            NewInstructionDescription: b #58
+            NewMachineCode: 1DE0
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__ndk1::less<ShaderVariantCollection::VariantInfo>,
+            std::__ndk1::allocator<ShaderVariantCollection::VariantInfo> > const&,
+            WarmupPassSetup const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*,
+            int, int, ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned long,
+            unsigned long)
+          Pattern: ^.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b 0x8a5de4
+            OriginalMachineCode: 06000014
+            Index: -1
+            NewInstructionDescription: b 0x8a5df0
+            NewMachineCode: 09000014
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__1::less<ShaderVariantCollection::VariantInfo>,
+            std::__1::allocator<ShaderVariantCollection::VariantInfo> > const&, WarmupPassSetup
+            const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*, int, int,
+            ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned long,
+            unsigned long)
+          Pattern: ^.*\.a:(.*\.o):.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b 0x2828
+            OriginalMachineCode: 04000014
+            Index: -1
+            NewInstructionDescription: b 0x2838
+            NewMachineCode: 08000014
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__ndk1::less<ShaderVariantCollection::VariantInfo>,
+            std::__ndk1::allocator<ShaderVariantCollection::VariantInfo> > const&,
+            WarmupPassSetup const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*,
+            int, int, ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned int,
+            unsigned int)
+          Pattern: ^.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b #52
+            OriginalMachineCode: 1AE0
+            Index: -1
+            NewInstructionDescription: b #58
+            NewMachineCode: 1DE0
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__ndk1::less<ShaderVariantCollection::VariantInfo>,
+            std::__ndk1::allocator<ShaderVariantCollection::VariantInfo> > const&,
+            WarmupPassSetup const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*,
+            int, int, ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned long,
+            unsigned long)
+          Pattern: ^.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b 0xf37c14
+            OriginalMachineCode: 04000014
+            Index: -1
+            NewInstructionDescription: b 0xf37c20
+            NewMachineCode: 07000014
+      - BuildTarget: 9
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: ShaderVariantCollection::WarmupOneShaderImpl(Shader*, DynamicBranchState*,
+            vector_set<ShaderVariantCollection::VariantInfo, std::__1::less<ShaderVariantCollection::VariantInfo>,
+            std::__1::allocator<ShaderVariantCollection::VariantInfo> > const&, WarmupPassSetup
+            const&, DynamicVBO*, void (*)(Shader*, DynamicBranchState*, int, int,
+            ShaderLab::Pass*, keywords::LocalKeywordState const&, WarmupPassSetup
+            const&, DynamicVBO*, void*, ShaderPassContext&), void*, unsigned long,
+            unsigned long)
+          Pattern: ^.*\.a:(.*\.o):.*ShaderVariantCollection.*WarmupOneShaderImpl.*$
+          Instructions:
+          - OriginalInstructionDescription: b 0x28c4
+            OriginalMachineCode: 04000014
+            Index: -1
+            NewInstructionDescription: b 0x28d4
+            NewMachineCode: 08000014
