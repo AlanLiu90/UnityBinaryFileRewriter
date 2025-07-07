@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UnityEngine;
 
 namespace EngineBinaryFileRewriter
 {
@@ -73,7 +74,7 @@ namespace EngineBinaryFileRewriter
         public Item GetItem(string name)
         {
             if (mDuplicateFile.Contains(name))
-                throw new NotImplementedException($"Duplicate object files: {name}");
+                Debug.LogWarning($"Duplicate object files: {name}");
 
             return mItems[name];
         }

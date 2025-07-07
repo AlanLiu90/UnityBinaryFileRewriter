@@ -71,10 +71,11 @@ req.SetEnableCompatibilityChecks(false); // Non-public, needs to be called by re
 工程中包含了Android、iOS的发布版本的配置。已测试版本：
 * 2022.3.60
 * 2022.3.20
+* 2020.3.48
 
 #### 在设备上测试配置的正确性
 1. 使用[工程](https://discussions.unity.com/t/android-build-project-freezes-after-5-minutes-with-playerloop-in-profiler-at-60-000-ms/784527/337)在设备上复现问题
 2. 集成工具，确定问题不再出现
 
 ## Todo
-* 支持更多的Unity版本（2023、6+）
+* 支持更多的Unity版本（6+）

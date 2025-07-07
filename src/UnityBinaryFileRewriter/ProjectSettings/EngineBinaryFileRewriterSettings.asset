@@ -313,6 +313,119 @@ MonoBehaviour:
   - Name: Fix Freezing in AsyncResourceUploadBlocking
     Enable: 0
     RuleSets:
+    - UnityVersion: ^2020\.
+      Rules:
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*\.a:(.*\.o):.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp w10, w9
+            OriginalMachineCode: 5F01096B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.eq
+            OriginalMachineCode: 40020054
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: cmp w10, w11
+            OriginalMachineCode: 5F010B6B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.ne
+            OriginalMachineCode: 21FEFF54
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: mov w0, #0
+            OriginalMachineCode: 00008052
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: ret
+            OriginalMachineCode: C0035FD6
+            Index: 0
+            NewInstructionDescription: b
+            NewMachineCode: EAFFFF17
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp w11, w9
+            OriginalMachineCode: 7F01096B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.eq
+            OriginalMachineCode: 60020054
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: cmp w11, w12
+            OriginalMachineCode: 7F010C6B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.ne
+            OriginalMachineCode: 21FEFF54
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: mov w0, wzr
+            OriginalMachineCode: E0031F2A
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: ret
+            OriginalMachineCode: C0035FD6
+            Index: 0
+            NewInstructionDescription: b
+            NewMachineCode: E9FFFF17
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp r3, r2
+            OriginalMachineCode: 9342
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: beq.n
+            OriginalMachineCode: 18D0
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: cmp r3, r1
+            OriginalMachineCode: 8B42
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: bne.n
+            OriginalMachineCode: E9D1
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: movs r0, #0
+            OriginalMachineCode: 0020
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: pop {r4, pc}
+            OriginalMachineCode: 10BD
+            Index: 0
+            NewInstructionDescription: b
+            NewMachineCode: E0E7
     - UnityVersion: ^2022\.
       Rules:
       - BuildTarget: 9

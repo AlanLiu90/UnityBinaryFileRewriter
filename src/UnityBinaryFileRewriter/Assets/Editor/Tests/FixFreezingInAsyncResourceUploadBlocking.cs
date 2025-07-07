@@ -53,7 +53,11 @@ public class FixFreezingInAsyncResourceUploadBlocking
         var rule = Utility.GetCodeRewriteRule(feature, target, architecture, development);
         Assert.IsNotNull(rule);
 
+#if UNITY_2022_1_OR_NEWER
         int repeat = target == BuildTarget.iOS ? 5 : 1;
+#else
+        int repeat = target == BuildTarget.iOS ? 7 : 1;
+#endif
 
         int expectedCount;
         var diffs = new List<(int, int)>();
