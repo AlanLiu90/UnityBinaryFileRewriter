@@ -32,10 +32,10 @@ req.SetEnableCompatibilityChecks(false); // Non-public, needs to be called by re
 本工具可以全局禁用掉AssetBundle的兼容性检查
 
 工程中包含了Android、iOS的开发版本和发布版本的配置。已测试版本：
-* 2022.3.60
-* 2021.3.45
-* 2020.3.48
-* 2019.4.40
+* 2022.3.60f1
+* 2021.3.45f1
+* 2020.3.48f1
+* 2019.4.40f1
 
 #### 在设备上测试配置的正确性（以Android为例，iOS类似）
 1. 打开工程：demo\HybridCLRTrial
@@ -69,9 +69,8 @@ req.SetEnableCompatibilityChecks(false); // Non-public, needs to be called by re
 本工具通过调整信号量类中一个函数的指令规避这个问题，但是有性能损失
 
 工程中包含了Android、iOS的发布版本的配置。已测试版本：
-* 2022.3.60
-* 2022.3.20
-* 2020.3.48
+* 2022.3.60f1
+* 2020.3.48f1
 
 #### 在设备上测试配置的正确性
 1. 打开工程: demo\FreezeRepro ([复现工程来源](https://discussions.unity.com/t/android-build-project-freezes-after-5-minutes-with-playerloop-in-profiler-at-60-000-ms/784527/337))
@@ -82,4 +81,4 @@ req.SetEnableCompatibilityChecks(false); // Non-public, needs to be called by re
 6. 重新执行第3步和第4步，确认渲染线程不再卡死
 
 ## Todo
-* 支持更多的Unity版本（6+）
+* 支持更多的Unity版本
