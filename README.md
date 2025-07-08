@@ -74,8 +74,12 @@ req.SetEnableCompatibilityChecks(false); // Non-public, needs to be called by re
 * 2020.3.48
 
 #### 在设备上测试配置的正确性
-1. 使用[工程](https://discussions.unity.com/t/android-build-project-freezes-after-5-minutes-with-playerloop-in-profiler-at-60-000-ms/784527/337)在设备上复现问题
-2. 集成工具，确定问题不再出现
+1. 打开工程: demo\FreezeRepro ([复现工程来源](https://discussions.unity.com/t/android-build-project-freezes-after-5-minutes-with-playerloop-in-profiler-at-60-000-ms/784527/337))
+2. 执行菜单项: Freeze Repro -> Build Bundles
+3. 构建并安装到设备上
+4. 点击开始按钮，等待渲染线程卡死
+5. 在 Project Settings -> Engine Binary File Rewriter 中开启`Fix Freezing in AsyncResourceUploadBlocking`
+6. 重新执行第3步和第4步，确认渲染线程不再卡死
 
 ## Todo
 * 支持更多的Unity版本（6+）

@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3039096029
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: ability_icon
+      Dependencies: {}

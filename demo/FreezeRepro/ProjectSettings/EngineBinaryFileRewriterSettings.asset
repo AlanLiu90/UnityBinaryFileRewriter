@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CodeRewriterFeatures:
   - Name: Disable Asset Bundle Compatibility Checks
-    Enable: 1
+    Enable: 0
     RuleSets:
     - UnityVersion: ^(2021|2022)\.
       Rules:
