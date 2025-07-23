@@ -67,6 +67,8 @@ req.SetEnableCompatibilityChecks(false); // Non-public, needs to be called by re
 ```
 
 本工具通过调整信号量类中一个函数的指令规避这个问题，但是有性能损失
+* 按照目前使用的项目的反馈，能确定可以大幅减少发生的概率，但不确定是否能完全避免
+* Unity在6中[修复了这个问题](https://issuetracker.unity3d.com/issues/arm-the-player-freezes-when-awaiting-g-uploadedtexturecondvar-in-the-main-thread)
 
 工程中包含了Android、iOS的发布版本的配置。已测试版本：
 * 2022.3.60f1
