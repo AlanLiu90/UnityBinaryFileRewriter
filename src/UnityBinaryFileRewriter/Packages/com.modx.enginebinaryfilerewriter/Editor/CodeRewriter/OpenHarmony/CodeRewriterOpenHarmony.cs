@@ -88,7 +88,7 @@ namespace EngineBinaryFileRewriter
                             string matchedLine = match.Groups[0].Value.Trim();
                             string symbolName = matchedLine.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Last();
 
-                            string demangledSymbolName = Utility.RunProcess(toolset.CppFilt, symbolName).Trim();
+                            string demangledSymbolName = Utility.RunProcess(toolset.CppFilt, $"--no-strip-underscore {symbolName}").Trim();
                             Debug.Log(demangledSymbolName);
 
                             if (symbol.DemangledName != demangledSymbolName)
