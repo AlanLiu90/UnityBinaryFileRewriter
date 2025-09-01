@@ -27,7 +27,7 @@
 HybridCLR要求AssetBundle开启TypeTree或者禁用AssetBundle的兼容性检查，但Unity只对异步加载提供了接口禁用（[文档](https://hybridclr.doc.code-philosophy.com/en/docs/basic/monobehaviour)）：
 ```cs
 AssetBundleCreateRequest req = AssetBundle. LoadFromFileAsync(path);
-req.SetEnableCompatibilityChecks(false); // Non-public, needs to be called by reflection
+req.SetEnableCompatibilityChecks(false); // 需要通过反射调用，并且存在线程竞争问题，可能不能起效
 ```
 本工具可以全局禁用掉AssetBundle的兼容性检查
 
