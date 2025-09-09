@@ -20,14 +20,13 @@
 ## 已配置功能
 项目可以将`ProjectSettings\EngineBinaryFileRewriterSettings.asset`拷贝到自己的工程中，并启用需要的功能
 
-工程中只包含特定Unity版本的配置，但其他版本有可能可以直接使用这些配置。
-可以将配置中的版本改成项目使用的Unity版本，然后运行本工程的单元测试（Window -> General -> Test Runner）验证工具是否能正常工作
+在项目中使用前，请运行本工程的单元测试（Window -> General -> Test Runner）验证配置是否能在项目使用的Unity版本中生效
 
 ### 禁用AssetBundle的兼容性检查
 HybridCLR要求AssetBundle开启TypeTree或者禁用AssetBundle的兼容性检查，但Unity只对异步加载提供了接口禁用（[文档](https://hybridclr.doc.code-philosophy.com/en/docs/basic/monobehaviour)）：
 ```cs
-AssetBundleCreateRequest req = AssetBundle. LoadFromFileAsync(path);
-req.SetEnableCompatibilityChecks(false); // 需要通过反射调用，并且存在线程竞争问题，可能不能起效
+AssetBundleCreateRequest req = AssetBundle.LoadFromFileAsync(path);
+req.SetEnableCompatibilityChecks(false); // 需要通过反射调用，并且存在线程竞争问题，有概率不起效
 ```
 本工具可以全局禁用掉AssetBundle的兼容性检查
 
@@ -82,5 +81,3 @@ req.SetEnableCompatibilityChecks(false); // 需要通过反射调用，并且存
 5. 在 Project Settings -> Engine Binary File Rewriter 中开启`Fix Freezing in AsyncResourceUploadBlocking`
 6. 重新执行第3步和第4步，确认渲染线程不再卡死
 
-## Todo
-* 支持更多的Unity版本
