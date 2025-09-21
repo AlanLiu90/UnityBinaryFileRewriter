@@ -28,7 +28,7 @@ HybridCLR要求AssetBundle开启TypeTree或者禁用AssetBundle的兼容性检�
 AssetBundleCreateRequest req = AssetBundle.LoadFromFileAsync(path);
 req.SetEnableCompatibilityChecks(false); // 需要通过反射调用，并且存在线程竞争问题，有概率不起效
 ```
-本工具可以全局禁用掉AssetBundle的兼容性检查
+本工具可以全局禁用掉AssetBundle的兼容性检查，从而让使用HybridCLR的项目可以关闭TypeTree
 
 工程中包含了Android、iOS的开发版本和发布版本的配置。已测试版本：
 * 2022.3.60f1
