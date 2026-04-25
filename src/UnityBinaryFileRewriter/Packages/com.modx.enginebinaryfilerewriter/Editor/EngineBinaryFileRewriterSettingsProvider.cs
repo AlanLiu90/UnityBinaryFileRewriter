@@ -130,7 +130,7 @@ namespace EngineBinaryFileRewriter
                         continue;
 
                     targets = ruleSet.Rules
-                        .Select(x => $"{x.BuildTarget}+{x.Architecture}+{GetText(x.Development)}")
+                        .Select(x => x.GetTargetString())
                         .ToArray();
                 }
                 catch (Exception ex)
@@ -142,11 +142,6 @@ namespace EngineBinaryFileRewriter
                 if (targets.Length > 0)
                     yield return (feature.Name, targets);
             }
-        }
-
-        private static string GetText(bool development)
-        {
-            return development ? "Development" : "Release";
         }
     }
 }

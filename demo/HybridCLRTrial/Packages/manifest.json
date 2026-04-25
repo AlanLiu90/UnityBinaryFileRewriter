@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.code-philosophy.hybridclr": "https://gitee.com/focus-creative-games/hybridclr_unity.git#v7.4.1",
+    "com.code-philosophy.hybridclr": "https://gitee.com/focus-creative-games/hybridclr_unity.git#v8.11.0",
     "com.modx.enginebinaryfilerewriter": "file:../../../src/UnityBinaryFileRewriter/Packages/com.modx.enginebinaryfilerewriter",
     "com.unity.ide.visualstudio": "2.0.21",
     "com.unity.ugui": "1.0.0",

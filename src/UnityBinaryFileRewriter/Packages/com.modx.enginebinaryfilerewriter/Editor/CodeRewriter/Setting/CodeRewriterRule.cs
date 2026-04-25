@@ -1,14 +1,26 @@
 using System;
-using UnityEditor;
+using UnityEngine;
 
 namespace EngineBinaryFileRewriter
 {
     [Serializable]
     public sealed class CodeRewriterRule
     {
+        public bool IsValid => Rule != null && Rule.IsValid;
+
         public BuildTarget BuildTarget;
-        public bool Development;
-        public Architecture Architecture;
-        public Symbol[] Symbols;
+
+        [SerializeReference]
+        public PlatformCodeRewriter Rule;
+
+        public T GetRule<T>() where T : PlatformCodeRewriter
+        {
+            return (T)Rule;
+        }
+
+        public string GetTargetString()
+        {
+            return $"{BuildTarget}+{Rule.GetTargetString()}";
+        }
     }
 }

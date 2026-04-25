@@ -422,6 +422,17 @@ internal static class Utility
 
     public static CodeRewriterRule GetCodeRewriteRule(string featureName, BuildTarget buildTarget, Architecture architecture, bool development)
     {
+        var parameters = new Dictionary<string, object>()
+        {
+            ["Architecture"] = architecture,
+            ["Development"] = development,
+        };
+
+        return GetCodeRewriteRule(featureName, buildTarget, parameters);
+    }
+
+    public static CodeRewriterRule GetCodeRewriteRule(string featureName, BuildTarget buildTarget, Dictionary<string, object> parameters)
+    {
         var feature = EngineBinaryFileRewriterSettings.Instance.CodeRewriterFeatures
             .Where(x => x.Name == featureName)
             .First();
@@ -443,10 +454,10 @@ internal static class Utility
             return null;
 
         var rule = ruleSet.Rules
-            .Where(x => x.BuildTarget == (EngineBinaryFileRewriter.BuildTarget)buildTarget && x.Architecture == architecture && x.Development == development)
+            .Where(x => x.BuildTarget == (EngineBinaryFileRewriter.BuildTarget)buildTarget && x.Rule != null && x.Rule.Match(parameters))
             .FirstOrDefault();
 
-        if (rule != null && rule.Symbols != null && rule.Symbols.Length > 0)
+        if (rule != null && rule.IsValid)
             return rule;
 
         return null;

@@ -73,6 +73,18 @@ namespace HybridCLR.Editor
             BuildAssets_iOS_();
         }
 
+        [MenuItem("Build/WebGL")]
+        public static void Build_WebGL()
+        {
+            Build_WebGL(false);
+        }
+
+        [MenuItem("Build/WebGL_Assets")]
+        public static void BuildAssets_WebGL()
+        {
+            BuildAssets_WebGL_();
+        }
+
 #if TUANJIE_1_0_OR_NEWER
         [MenuItem("Build/OpenHarmony")]
         public static void Build_OpenHarmony()
@@ -252,6 +264,55 @@ namespace HybridCLR.Editor
             Debug.Log("====> 复制热更新资源和代码");
             BuildAssetsCommand.BuildAndCopyABAOTHotUpdateDlls();
             CopyDir(Application.streamingAssetsPath, $"{outputPath}/HybridCLRTrial/Data/Raw", true, false);
+        }
+
+        public static void Build_WebGL(bool exitWhenCompleted)
+        {
+            BuildTarget target = BuildTarget.WebGL;
+            BuildTarget activeTarget = EditorUserBuildSettings.activeBuildTarget;
+            if (activeTarget != BuildTarget.WebGL)
+            {
+                Debug.LogError("请先切到WebGL平台再打包");
+                return;
+            }
+            // Get filename.
+            string outputPath = $"{SettingsUtil.ProjectDir}/Release-WebGL";
+            var buildOptions = BuildOptions.CompressWithLz4;
+
+            string location = $"{outputPath}";
+
+            PrebuildCommand.GenerateAll();
+            Debug.Log("====> Build App");
+            BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions()
+            {
+                scenes = new string[] { "Assets/Scenes/main.unity" },
+                locationPathName = location,
+                options = buildOptions,
+                target = target,
+                targetGroup = BuildTargetGroup.WebGL,
+            };
+
+            var report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+            if (report.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded)
+            {
+                Debug.LogError("打包失败");
+                if (exitWhenCompleted)
+                {
+                    EditorApplication.Exit(1);
+                }
+                return;
+            }
+
+            BuildAssets_WebGL_();
+        }
+
+        public static void BuildAssets_WebGL_()
+        {
+            string outputPath = $"{SettingsUtil.ProjectDir}/Release-WebGL";
+
+            Debug.Log("====> 复制热更新资源和代码");
+            BuildAssetsCommand.BuildAndCopyABAOTHotUpdateDlls();
+            CopyDir(Application.streamingAssetsPath, $"{outputPath}/StreamingAssets", true);
         }
 
 #if TUANJIE_1_0_OR_NEWER

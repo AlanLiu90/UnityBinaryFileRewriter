@@ -100,3 +100,9 @@ Build-Mac
 /demo/FreezeRepro/Temp
 /demo/FreezeRepro/*.csproj
 /demo/FreezeRepro/*.sln
+/demo/HybridCLRTrial/Release-WebGL
+/demo/HybridCLRTrial/Release-Win64
+/demo/HybridCLRTrial/UserSettings
+/demo/HybridCLRTrial/.vs
+/demo/HybridCLRTrial/Logs
+/demo/HybridCLRTrial/obj

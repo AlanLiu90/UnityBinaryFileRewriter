@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.code-philosophy.hybridclr": {
-      "version": "https://gitee.com/focus-creative-games/hybridclr_unity.git#v7.4.1",
+      "version": "https://gitee.com/focus-creative-games/hybridclr_unity.git#v8.11.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "de7b60695a4b7b42cc6a96cb98a3cd8144ef04d0"
+      "hash": "4feac30cb2e105992986c737f7f54992b8300e1a"
     },
     "com.modx.enginebinaryfilerewriter": {
       "version": "file:../../../src/UnityBinaryFileRewriter/Packages/com.modx.enginebinaryfilerewriter",

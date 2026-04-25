@@ -83,9 +83,11 @@ public class DisableAssetBundleCompatibilityChecks
         var expectedCount = 1;
         var diffs = new List<(int, int)>();
 
-        Assert.AreEqual(1, rule.Symbols.Length);
+        var symbols = rule.GetRule<PlatformCodeRewriterGeneral>().Symbols;
 
-        foreach (var symbol in rule.Symbols)
+        Assert.AreEqual(1, symbols.Length);
+
+        foreach (var symbol in symbols)
         {
             Assert.AreEqual(1, symbol.Instructions.Length);
 

@@ -81,7 +81,7 @@ namespace EngineBinaryFileRewriter
                 {
                     Debug.LogFormat("Start to apply rule: {0}", name);
 
-                    foreach (var symbol in rule.Symbols)
+                    foreach (var symbol in rule.GetRule<PlatformCodeRewriterRuleOpenHarmony>().Symbols)
                     {
                         foreach (Match match in symbol.Match(symbolText))
                         {

@@ -6,5 +6,6 @@ namespace EngineBinaryFileRewriter
         ARM64,
         X86,
         X86_64,
+        WASM,
     }
 }

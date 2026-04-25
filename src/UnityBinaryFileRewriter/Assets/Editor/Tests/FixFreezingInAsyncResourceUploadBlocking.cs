@@ -67,11 +67,13 @@ public class FixFreezingInAsyncResourceUploadBlocking
         else
             expectedCount = architecture == Architecture.ARMv7 ? 11 : 24;
 
-        Assert.AreEqual(1, rule.Symbols.Length);
+        var symbols = rule.GetRule<PlatformCodeRewriterGeneral>().Symbols;
+
+        Assert.AreEqual(1, symbols.Length);
 
         while (repeat-- > 0)
         {
-            foreach (var symbol in rule.Symbols)
+            foreach (var symbol in symbols)
             {
                 Assert.AreEqual(6, symbol.Instructions.Length);
 

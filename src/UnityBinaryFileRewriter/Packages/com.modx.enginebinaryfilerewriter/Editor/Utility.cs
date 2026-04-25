@@ -73,6 +73,17 @@ namespace EngineBinaryFileRewriter
 
         public static IEnumerable<(string, CodeRewriterRule)> GetCodeRewriteRules(BuildTarget buildTarget, Architecture architecture, bool development)
         {
+            var parameters = new Dictionary<string, object>()
+            {
+                ["Architecture"] = architecture,
+                ["Development"] = development,
+            };
+
+            return GetCodeRewriteRules(buildTarget, parameters);
+        }
+
+        public static IEnumerable<(string, CodeRewriterRule)> GetCodeRewriteRules(BuildTarget buildTarget, Dictionary<string, object> parameters)
+        {
             var unityVersion = GetUnityVersion();
             var features = EngineBinaryFileRewriterSettings.Instance.CodeRewriterFeatures;
 
@@ -95,10 +106,10 @@ namespace EngineBinaryFileRewriter
                     continue;
 
                 var rule = ruleSet.Rules
-                    .Where(x => x.BuildTarget == buildTarget && x.Architecture == architecture && x.Development == development)
+                    .Where(x => x.BuildTarget == buildTarget && x.Rule != null && x.Rule.Match(parameters))
                     .FirstOrDefault();
 
-                if (rule != null && rule.Symbols != null && rule.Symbols.Length > 0)
+                if (rule != null && rule.IsValid)
                     yield return (feature.Name, rule);
             }
         }
@@ -143,30 +154,7 @@ namespace EngineBinaryFileRewriter
 
                         foreach (var rule in ruleSet.Rules)
                         {
-                            foreach (var symbol in rule.Symbols)
-                            {
-                                if (string.IsNullOrEmpty(symbol.Pattern))
-                                    errors.Add("Symbol's Name is empty");
-
-                                if (symbol.Instructions == null || symbol.Instructions.Length == 0)
-                                {
-                                    errors.Add("Symbol's Instructions is empty");
-                                    continue;
-                                }
-                                
-                                foreach (var inst in symbol.Instructions)
-                                {
-                                    if (string.IsNullOrEmpty(inst.OriginalMachineCode))
-                                        errors.Add($"Instruction's OriginalMachineCode is empty (Symbol: {symbol.Pattern})");
-                                    else if (!ValidateMachineCode(inst.OriginalMachineCode, rule.Architecture))
-                                        errors.Add($"Instruction's OriginalMachineCode is invalid (Symbol: {symbol.Pattern})");
-
-                                    if (string.IsNullOrEmpty(inst.NewMachineCode))
-                                        errors.Add($"Instruction's NewMachineCode is empty (Symbol: {symbol.Pattern})");
-                                    else if (!ValidateMachineCode(inst.NewMachineCode, rule.Architecture))
-                                        errors.Add($"Instruction's NewMachineCode is invalid (Symbol: {symbol.Pattern})");
-                                }
-                            }
+                            rule.Rule.Validate(errors);
                         }
                     }
 
@@ -189,7 +177,7 @@ namespace EngineBinaryFileRewriter
             return errorMessage.Length == 0;
         }
 
-        private static bool ValidateMachineCode(string code, Architecture architecture)
+        public static bool ValidateMachineCode(string code, Architecture architecture)
         {
             bool isValid;
 
@@ -206,6 +194,10 @@ namespace EngineBinaryFileRewriter
                 case Architecture.X86:
                 case Architecture.X86_64:
                     isValid = code.Length >= 2 && code.Length <= 30 && code.Length % 2 == 0;
+                    break;
+
+                case Architecture.WASM:
+                    isValid = code.Length >= 2 && code.Length % 2 == 0;
                     break;
 
                 default:

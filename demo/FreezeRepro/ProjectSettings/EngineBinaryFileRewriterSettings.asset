@@ -19,6 +19,153 @@ MonoBehaviour:
     - UnityVersion: ^(2021|2022)\.
       Rules:
       - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897152
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897153
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897154
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897155
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897156
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897157
+      - BuildTarget: 20
+        Rule:
+          rid: 2238138957006897188
+      - BuildTarget: 20
+        Rule:
+          rid: 2238138971710029825
+      - BuildTarget: 20
+        Rule:
+          rid: 2238138971710029827
+      - BuildTarget: 20
+        Rule:
+          rid: 2238138971710029829
+      - BuildTarget: 20
+        Rule:
+          rid: 2238138971710029831
+      - BuildTarget: 20
+        Rule:
+          rid: 2238138971710029833
+    - UnityVersion: ^(2019|2020)\.
+      Rules:
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897158
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897159
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897160
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897161
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897162
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897163
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897164
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897165
+    - UnityVersion: ^1\.
+      Rules:
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897166
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897167
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897168
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897169
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897170
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897171
+      - BuildTarget: 48
+        Rule:
+          rid: 2238138957006897172
+      - BuildTarget: 48
+        Rule:
+          rid: 2238138957006897173
+      - BuildTarget: 48
+        Rule:
+          rid: 2238138957006897177
+      - BuildTarget: 48
+        Rule:
+          rid: 2238138957006897178
+  - Name: Fix Freezing in AsyncResourceUploadBlocking
+    Enable: 0
+    RuleSets:
+    - UnityVersion: ^2020\.
+      Rules:
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897185
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897186
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897187
+    - UnityVersion: ^2022\.
+      Rules:
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897174
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897175
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897176
+  - Name: Warmup Only The First Valid SubShader
+    Enable: 0
+    RuleSets:
+    - UnityVersion: ^2022\.
+      Rules:
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897179
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897180
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897181
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897182
+      - BuildTarget: 13
+        Rule:
+          rid: 2238138957006897183
+      - BuildTarget: 9
+        Rule:
+          rid: 2238138957006897184
+  references:
+    version: 2
+    RefIds:
+    - rid: 2238138957006897152
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 0
         Symbols:
@@ -30,7 +177,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb r5, [r6, #28]
             NewMachineCode: 3577
-      - BuildTarget: 13
+    - rid: 2238138957006897153
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 1
         Symbols:
@@ -42,7 +191,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #376]
             NewMachineCode: 7fe20539
-      - BuildTarget: 9
+    - rid: 2238138957006897154
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 1
         Symbols:
@@ -54,7 +205,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #0x190]
             NewMachineCode: 7f420639
-      - BuildTarget: 13
+    - rid: 2238138957006897155
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 0
         Symbols:
@@ -66,7 +219,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb.w r6, [r5, #36]
             NewMachineCode: 85F82460
-      - BuildTarget: 13
+    - rid: 2238138957006897156
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 1
         Symbols:
@@ -78,7 +233,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #416]
             NewMachineCode: 7F820639
-      - BuildTarget: 9
+    - rid: 2238138957006897157
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 1
         Symbols:
@@ -90,9 +247,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #0x1b8]
             NewMachineCode: 7FE20639
-    - UnityVersion: ^(2019|2020)\.
-      Rules:
-      - BuildTarget: 13
+    - rid: 2238138957006897158
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 0
         Symbols:
@@ -104,7 +261,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb r7, [r6, #28]
             NewMachineCode: 3777
-      - BuildTarget: 13
+    - rid: 2238138957006897159
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 1
         Symbols:
@@ -116,7 +275,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #376]
             NewMachineCode: 7fe20539
-      - BuildTarget: 9
+    - rid: 2238138957006897160
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 0
         Symbols:
@@ -128,7 +289,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: mov r1, #0
             NewMachineCode: 0010A0E3
-      - BuildTarget: 9
+    - rid: 2238138957006897161
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 1
         Symbols:
@@ -140,7 +303,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #0x190]
             NewMachineCode: 7f420639
-      - BuildTarget: 13
+    - rid: 2238138957006897162
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 0
         Symbols:
@@ -152,7 +317,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb.w r7, [r4, #36]
             NewMachineCode: 84F82470
-      - BuildTarget: 13
+    - rid: 2238138957006897163
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 1
         Symbols:
@@ -164,7 +331,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19,#416]
             NewMachineCode: 7F820639
-      - BuildTarget: 9
+    - rid: 2238138957006897164
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 0
         Symbols:
@@ -176,7 +345,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: mov r1, #0
             NewMachineCode: 0010A0E3
-      - BuildTarget: 9
+    - rid: 2238138957006897165
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 1
         Symbols:
@@ -188,9 +359,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #0x1b8]
             NewMachineCode: 7FE20639
-    - UnityVersion: ^1\.
-      Rules:
-      - BuildTarget: 13
+    - rid: 2238138957006897166
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 0
         Symbols:
@@ -202,7 +373,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb r5, [r6, #28]
             NewMachineCode: 3577
-      - BuildTarget: 13
+    - rid: 2238138957006897167
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 1
         Symbols:
@@ -214,7 +387,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #376]
             NewMachineCode: 7fe20539
-      - BuildTarget: 9
+    - rid: 2238138957006897168
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 1
         Symbols:
@@ -226,7 +401,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #408]
             NewMachineCode: 7F620639
-      - BuildTarget: 13
+    - rid: 2238138957006897169
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 0
         Symbols:
@@ -238,7 +415,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb.w r6, [r5, #36]
             NewMachineCode: 85F82460
-      - BuildTarget: 13
+    - rid: 2238138957006897170
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 1
         Symbols:
@@ -250,7 +429,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #416]
             NewMachineCode: 7F820639
-      - BuildTarget: 9
+    - rid: 2238138957006897171
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 1
         Symbols:
@@ -262,7 +443,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #448]
             NewMachineCode: 7F020739
-      - BuildTarget: 48
+    - rid: 2238138957006897172
+      type: {class: PlatformCodeRewriterRuleOpenHarmony, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 0
         Symbols:
@@ -274,7 +457,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb r5, [r4, #252]
             NewMachineCode: FC50C4E5
-      - BuildTarget: 48
+    - rid: 2238138957006897173
+      type: {class: PlatformCodeRewriterRuleOpenHarmony, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 1
         Symbols:
@@ -286,149 +471,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: strb wzr, [x19, #384]
             NewMachineCode: 7F020639
-      - BuildTarget: 48
-        Development: 1
-        Architecture: 0
-        Symbols:
-        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
-          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
-          Instructions:
-          - OriginalInstructionDescription: strb r0, [r4, #292]
-            OriginalMachineCode: 2401C4E5
-            Index: -1
-            NewInstructionDescription: strb r6, [r4, #292]
-            NewMachineCode: 2461C4E5
-      - BuildTarget: 48
-        Development: 1
-        Architecture: 1
-        Symbols:
-        - DemangledName: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
-          Pattern: ^.*AssetBundleLoadFromAsyncOperation.*MemLabelId.*$
-          Instructions:
-          - OriginalInstructionDescription: strb w8, [x19, #424]
-            OriginalMachineCode: 68A20639
-            Index: -1
-            NewInstructionDescription: strb wzr, [x19, #424]
-            NewMachineCode: 7FA20639
-  - Name: Fix Freezing in AsyncResourceUploadBlocking
-    Enable: 0
-    RuleSets:
-    - UnityVersion: ^2020\.
-      Rules:
-      - BuildTarget: 9
-        Development: 0
-        Architecture: 1
-        Symbols:
-        - DemangledName: CappedSemaphore::Signal(int)
-          Pattern: ^.*\.a:(.*\.o):.*CappedSemaphore.*Signal.*$
-          Instructions:
-          - OriginalInstructionDescription: cmp w10, w9
-            OriginalMachineCode: 5F01096B
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 1F2003D5
-          - OriginalInstructionDescription: b.eq
-            OriginalMachineCode: 40020054
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 1F2003D5
-          - OriginalInstructionDescription: cmp w10, w11
-            OriginalMachineCode: 5F010B6B
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 1F2003D5
-          - OriginalInstructionDescription: b.ne
-            OriginalMachineCode: 21FEFF54
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 1F2003D5
-          - OriginalInstructionDescription: mov w0, #0
-            OriginalMachineCode: 00008052
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 1F2003D5
-          - OriginalInstructionDescription: ret
-            OriginalMachineCode: C0035FD6
-            Index: 0
-            NewInstructionDescription: b
-            NewMachineCode: EAFFFF17
-      - BuildTarget: 13
-        Development: 0
-        Architecture: 1
-        Symbols:
-        - DemangledName: CappedSemaphore::Signal(int)
-          Pattern: ^.*CappedSemaphore.*Signal.*$
-          Instructions:
-          - OriginalInstructionDescription: cmp w11, w9
-            OriginalMachineCode: 7F01096B
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 1F2003D5
-          - OriginalInstructionDescription: b.eq
-            OriginalMachineCode: 60020054
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 1F2003D5
-          - OriginalInstructionDescription: cmp w11, w12
-            OriginalMachineCode: 7F010C6B
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 1F2003D5
-          - OriginalInstructionDescription: b.ne
-            OriginalMachineCode: 21FEFF54
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 1F2003D5
-          - OriginalInstructionDescription: mov w0, wzr
-            OriginalMachineCode: E0031F2A
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 1F2003D5
-          - OriginalInstructionDescription: ret
-            OriginalMachineCode: C0035FD6
-            Index: 0
-            NewInstructionDescription: b
-            NewMachineCode: E9FFFF17
-      - BuildTarget: 13
-        Development: 0
-        Architecture: 0
-        Symbols:
-        - DemangledName: CappedSemaphore::Signal(int)
-          Pattern: ^.*CappedSemaphore.*Signal.*$
-          Instructions:
-          - OriginalInstructionDescription: cmp r3, r2
-            OriginalMachineCode: 9342
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 00BF
-          - OriginalInstructionDescription: beq.n
-            OriginalMachineCode: 18D0
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 00BF
-          - OriginalInstructionDescription: cmp r3, r1
-            OriginalMachineCode: 8B42
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 00BF
-          - OriginalInstructionDescription: bne.n
-            OriginalMachineCode: E9D1
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 00BF
-          - OriginalInstructionDescription: movs r0, #0
-            OriginalMachineCode: 0020
-            Index: -1
-            NewInstructionDescription: nop
-            NewMachineCode: 00BF
-          - OriginalInstructionDescription: pop {r4, pc}
-            OriginalMachineCode: 10BD
-            Index: 0
-            NewInstructionDescription: b
-            NewMachineCode: E0E7
-    - UnityVersion: ^2022\.
-      Rules:
-      - BuildTarget: 9
+    - rid: 2238138957006897174
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 1
         Symbols:
@@ -465,7 +510,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: b
             NewMachineCode: E5FFFF17
-      - BuildTarget: 13
+    - rid: 2238138957006897175
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 1
         Symbols:
@@ -502,7 +549,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: b
             NewMachineCode: E5FFFF17
-      - BuildTarget: 13
+    - rid: 2238138957006897176
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 0
         Symbols:
@@ -539,12 +588,21 @@ MonoBehaviour:
             Index: 0
             NewInstructionDescription: b
             NewMachineCode: DDE7
-  - Name: Warmup Only The First Valid SubShader
-    Enable: 0
-    RuleSets:
-    - UnityVersion: ^2022\.
-      Rules:
-      - BuildTarget: 13
+    - rid: 2238138957006897177
+      type: {class: PlatformCodeRewriterRuleOpenHarmony, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
+        Development: 0
+        Architecture: 0
+        Symbols: []
+    - rid: 2238138957006897178
+      type: {class: PlatformCodeRewriterRuleOpenHarmony, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
+        Development: 0
+        Architecture: 0
+        Symbols: []
+    - rid: 2238138957006897179
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 0
         Symbols:
@@ -562,7 +620,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: b #58
             NewMachineCode: 1DE0
-      - BuildTarget: 13
+    - rid: 2238138957006897180
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 1
         Symbols:
@@ -580,7 +640,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: b 0x8a5df0
             NewMachineCode: 09000014
-      - BuildTarget: 9
+    - rid: 2238138957006897181
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 0
         Architecture: 1
         Symbols:
@@ -598,7 +660,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: b 0x2838
             NewMachineCode: 08000014
-      - BuildTarget: 13
+    - rid: 2238138957006897182
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 0
         Symbols:
@@ -616,7 +680,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: b #58
             NewMachineCode: 1DE0
-      - BuildTarget: 13
+    - rid: 2238138957006897183
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 1
         Symbols:
@@ -634,7 +700,9 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: b 0xf37c20
             NewMachineCode: 07000014
-      - BuildTarget: 9
+    - rid: 2238138957006897184
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
         Development: 1
         Architecture: 1
         Symbols:
@@ -652,3 +720,210 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: b 0x28d4
             NewMachineCode: 08000014
+    - rid: 2238138957006897185
+      type: {class: PlatformCodeRewriterRuleIOS, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*\.a:(.*\.o):.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp w10, w9
+            OriginalMachineCode: 5F01096B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.eq
+            OriginalMachineCode: 40020054
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: cmp w10, w11
+            OriginalMachineCode: 5F010B6B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.ne
+            OriginalMachineCode: 21FEFF54
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: mov w0, #0
+            OriginalMachineCode: 00008052
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: ret
+            OriginalMachineCode: C0035FD6
+            Index: 0
+            NewInstructionDescription: b
+            NewMachineCode: EAFFFF17
+    - rid: 2238138957006897186
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp w11, w9
+            OriginalMachineCode: 7F01096B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.eq
+            OriginalMachineCode: 60020054
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: cmp w11, w12
+            OriginalMachineCode: 7F010C6B
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: b.ne
+            OriginalMachineCode: 21FEFF54
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: mov w0, wzr
+            OriginalMachineCode: E0031F2A
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 1F2003D5
+          - OriginalInstructionDescription: ret
+            OriginalMachineCode: C0035FD6
+            Index: 0
+            NewInstructionDescription: b
+            NewMachineCode: E9FFFF17
+    - rid: 2238138957006897187
+      type: {class: PlatformCodeRewriterRuleAndroid, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: CappedSemaphore::Signal(int)
+          Pattern: ^.*CappedSemaphore.*Signal.*$
+          Instructions:
+          - OriginalInstructionDescription: cmp r3, r2
+            OriginalMachineCode: 9342
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: beq.n
+            OriginalMachineCode: 18D0
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: cmp r3, r1
+            OriginalMachineCode: 8B42
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: bne.n
+            OriginalMachineCode: E9D1
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: movs r0, #0
+            OriginalMachineCode: 0020
+            Index: -1
+            NewInstructionDescription: nop
+            NewMachineCode: 00BF
+          - OriginalInstructionDescription: pop {r4, pc}
+            OriginalMachineCode: 10BD
+            Index: 0
+            NewInstructionDescription: b
+            NewMachineCode: E0E7
+    - rid: 2238138957006897188
+      type: {class: PlatformCodeRewriterRuleWebGL, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
+        Development: 0
+        ThreadsSupport: 0
+        OptimizeForSize: 0
+        Symbols:
+        - FileName: WebGLSupport_AssetBundleModule_Dynamic.a
+          Name: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Instructions:
+          - OriginalInstructionDescription: i32.const 1; i32.store8 228;
+            OriginalMachineCode: 41013a00e401
+            Index: -1
+            NewInstructionDescription: i32.const 0; i32.store8 228;
+            NewMachineCode: 41003a00e401
+    - rid: 2238138971710029825
+      type: {class: PlatformCodeRewriterRuleWebGL, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
+        Development: 0
+        ThreadsSupport: 1
+        OptimizeForSize: 0
+        Symbols:
+        - FileName: WebGLSupport_AssetBundleModule_Dynamic.a
+          Name: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Instructions:
+          - OriginalInstructionDescription: i32.const 1; i32.store8 252;
+            OriginalMachineCode: 41013a00fc01
+            Index: -1
+            NewInstructionDescription: i32.const 0; i32.store8 252;
+            NewMachineCode: 41003a00fc01
+    - rid: 2238138971710029827
+      type: {class: PlatformCodeRewriterRuleWebGL, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
+        Development: 0
+        ThreadsSupport: 1
+        OptimizeForSize: 1
+        Symbols:
+        - FileName: WebGLSupport_AssetBundleModule_Dynamic.a
+          Name: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Instructions:
+          - OriginalInstructionDescription: i32.const 1; i32.store8 252;
+            OriginalMachineCode: 41013a00fc01
+            Index: -1
+            NewInstructionDescription: i32.const 0; i32.store8 252;
+            NewMachineCode: 41003a00fc01
+    - rid: 2238138971710029829
+      type: {class: PlatformCodeRewriterRuleWebGL, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
+        Development: 0
+        ThreadsSupport: 0
+        OptimizeForSize: 1
+        Symbols:
+        - FileName: WebGLSupport_AssetBundleModule_Dynamic.a
+          Name: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Instructions:
+          - OriginalInstructionDescription: i32.const 1; i32.store8 228;
+            OriginalMachineCode: 41013a00e401
+            Index: -1
+            NewInstructionDescription: i32.const 0; i32.store8 228;
+            NewMachineCode: 41003a00e401
+    - rid: 2238138971710029831
+      type: {class: PlatformCodeRewriterRuleWebGL, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
+        Development: 1
+        ThreadsSupport: 0
+        OptimizeForSize: 0
+        Symbols:
+        - FileName: WebGLSupport_AssetBundleModule_Dynamic.a
+          Name: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Instructions:
+          - OriginalInstructionDescription: i32.const 1; i32.store8 268;
+            OriginalMachineCode: 41013a008c02
+            Index: -1
+            NewInstructionDescription: i32.const 0; i32.store8 268;
+            NewMachineCode: 41003a008c02
+    - rid: 2238138971710029833
+      type: {class: PlatformCodeRewriterRuleWebGL, ns: EngineBinaryFileRewriter, asm: EngineBinaryFileRewriter.Editor}
+      data:
+        Development: 1
+        ThreadsSupport: 1
+        OptimizeForSize: 0
+        Symbols:
+        - FileName: WebGLSupport_AssetBundleModule_Dynamic.a
+          Name: AssetBundleLoadFromAsyncOperation::AssetBundleLoadFromAsyncOperation(MemLabelId)
+          Instructions:
+          - OriginalInstructionDescription: i32.const 1; i32.store8 292;
+            OriginalMachineCode: 41013a00a402
+            Index: -1
+            NewInstructionDescription: i32.const 0; i32.store8 292;
+            NewMachineCode: 41003a00a402

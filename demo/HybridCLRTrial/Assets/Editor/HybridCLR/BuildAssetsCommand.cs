@@ -61,8 +61,22 @@ namespace HybridCLR.Editor
             }
 
             BuildAssetBundleOptions options = BuildAssetBundleOptions.None;
-            if (target == BuildTarget.Android || target == BuildTarget.iOS)
-                options = BuildAssetBundleOptions.DisableWriteTypeTree;
+
+            bool disableWriteTypeTree = false;
+
+            if (target == BuildTarget.Android || target == BuildTarget.iOS || target == BuildTarget.WebGL)
+                disableWriteTypeTree = true;
+
+#if TUANJIE_1_0_OR_NEWER
+            if (target == BuildTarget.OpenHarmony)
+                disableWriteTypeTree = true;
+#endif
+
+            if (disableWriteTypeTree)
+                options |= BuildAssetBundleOptions.DisableWriteTypeTree;
+
+            if (target == BuildTarget.WebGL)
+                options |= BuildAssetBundleOptions.ChunkBasedCompression;
 
             BuildPipeline.BuildAssetBundles(outputDir, abs.ToArray(), options, target);
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);

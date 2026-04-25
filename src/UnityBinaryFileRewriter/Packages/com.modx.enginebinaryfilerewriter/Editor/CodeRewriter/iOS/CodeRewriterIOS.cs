@@ -96,7 +96,7 @@ namespace EngineBinaryFileRewriter
             {
                 Debug.LogFormat("Start to apply rule: {0}", name);
 
-                foreach (var symbol in rule.Symbols)
+                foreach (var symbol in rule.GetRule<PlatformCodeRewriterRuleIOS>().Symbols)
                 {
                     // .o -> symbols
                     var objectFiles = new Dictionary<string, List<string>>();
