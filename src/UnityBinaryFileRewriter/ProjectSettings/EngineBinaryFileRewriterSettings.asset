@@ -652,3 +652,140 @@ MonoBehaviour:
             Index: -1
             NewInstructionDescription: b 0x28d4
             NewMachineCode: 08000014
+  - Name: Disable RefreshFQNCache
+    Enable: 0
+    RuleSets:
+    - UnityVersion: ^(2021|2022)\.
+      Rules:
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: APIUpdating::Queries::ResolveTypeFromName(char const*, char
+            const*, char const*)
+          Pattern: ^.*ResolveTypeFromName.*$
+          Instructions:
+          - OriginalInstructionDescription: cbnz r0, #2
+            OriginalMachineCode: 08b9
+            Index: -1
+            NewInstructionDescription: b #2
+            NewMachineCode: 01e0
+      - BuildTarget: 13
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: APIUpdating::Queries::ResolveTypeFromName(char const*, char
+            const*, char const*)
+          Pattern: ^.*ResolveTypeFromName.*$
+          Instructions:
+          - OriginalInstructionDescription: cbnz w8, <skip RefreshFQNCache>
+            OriginalMachineCode: 48000035
+            Index: -1
+            NewInstructionDescription: b <skip RefreshFQNCache>
+            NewMachineCode: 02000014
+      - BuildTarget: 9
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: APIUpdating::Queries::ResolveTypeFromName(char const*, char
+            const*, char const*)
+          Pattern: ^.*\.a:(.*\.o):.*ResolveTypeFromName.*$
+          Instructions:
+          - OriginalInstructionDescription: cbnz w8, <skip RefreshFQNCache>
+            OriginalMachineCode: 48000035
+            Index: -1
+            NewInstructionDescription: b <skip RefreshFQNCache>
+            NewMachineCode: 02000014
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: APIUpdating::Queries::ResolveTypeFromName(char const*, char
+            const*, char const*)
+          Pattern: ^.*ResolveTypeFromName.*$
+          Instructions:
+          - OriginalInstructionDescription: cbnz r0, #2
+            OriginalMachineCode: 08b9
+            Index: -1
+            NewInstructionDescription: b #2
+            NewMachineCode: 01e0
+      - BuildTarget: 13
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: APIUpdating::Queries::ResolveTypeFromName(char const*, char
+            const*, char const*)
+          Pattern: ^.*ResolveTypeFromName.*$
+          Instructions:
+          - OriginalInstructionDescription: cbnz w8, <skip RefreshFQNCache>
+            OriginalMachineCode: 48000035
+            Index: -1
+            NewInstructionDescription: b <skip RefreshFQNCache>
+            NewMachineCode: 02000014
+      - BuildTarget: 9
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: APIUpdating::Queries::ResolveTypeFromName(char const*, char
+            const*, char const*)
+          Pattern: ^.*\.a:(.*\.o):.*ResolveTypeFromName.*$
+          Instructions:
+          - OriginalInstructionDescription: cbnz w8, <skip RefreshFQNCache>
+            OriginalMachineCode: 48000035
+            Index: -1
+            NewInstructionDescription: b <skip RefreshFQNCache>
+            NewMachineCode: 02000014
+    - UnityVersion: ^1\.
+      Rules:
+      - BuildTarget: 48
+        Development: 0
+        Architecture: 0
+        Symbols:
+        - DemangledName: APIUpdating::Queries::ResolveTypeFromName(char const*, char
+            const*, char const*)
+          Pattern: ^.*ResolveTypeFromName.*$
+          Instructions:
+          - OriginalInstructionDescription: ldrb r0, [r0]
+            OriginalMachineCode: 0000d0e5
+            Index: -1
+            NewInstructionDescription: mov r0, #1
+            NewMachineCode: 0100a0e3
+      - BuildTarget: 48
+        Development: 0
+        Architecture: 1
+        Symbols:
+        - DemangledName: APIUpdating::Queries::ResolveTypeFromName(char const*, char
+            const*, char const*)
+          Pattern: ^.*ResolveTypeFromName.*$
+          Instructions:
+          - OriginalInstructionDescription: cbnz w8, <skip RefreshFQNCache>
+            OriginalMachineCode: 48000035
+            Index: -1
+            NewInstructionDescription: b <skip RefreshFQNCache>
+            NewMachineCode: 02000014
+      - BuildTarget: 48
+        Development: 1
+        Architecture: 0
+        Symbols:
+        - DemangledName: APIUpdating::Queries::ResolveTypeFromName(char const*, char
+            const*, char const*)
+          Pattern: ^.*ResolveTypeFromName.*$
+          Instructions:
+          - OriginalInstructionDescription: ldrb r0, [r0]
+            OriginalMachineCode: 0000d0e5
+            Index: -1
+            NewInstructionDescription: mov r0, #1
+            NewMachineCode: 0100a0e3
+      - BuildTarget: 48
+        Development: 1
+        Architecture: 1
+        Symbols:
+        - DemangledName: APIUpdating::Queries::ResolveTypeFromName(char const*, char
+            const*, char const*)
+          Pattern: ^.*ResolveTypeFromName.*$
+          Instructions:
+          - OriginalInstructionDescription: cbnz w8, <skip RefreshFQNCache>
+            OriginalMachineCode: 48000035
+            Index: -1
+            NewInstructionDescription: b <skip RefreshFQNCache>
+            NewMachineCode: 02000014

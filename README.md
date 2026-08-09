@@ -9,6 +9,7 @@
 - [已配置功能](#已配置功能)
     - [禁用AssetBundle的兼容性检查](#禁用AssetBundle的兼容性检查)
     - [修复异步上传导致线程卡死的bug](#修复异步上传导致线程卡死的bug)
+    - [禁用RefreshFQNCache](#禁用RefreshFQNCache)
 
 ## 集成
 1. 引用包com.modx.enginebinaryfilerewriter，参考格式：https://github.com/AlanLiu90/UnityBinaryFileRewriter.git?path=src/UnityBinaryFileRewriter/Packages/com.modx.enginebinaryfilerewriter#v0.7.0
@@ -88,3 +89,12 @@ req.SetEnableCompatibilityChecks(false); // 需要通过反射调用，并且存
 5. 在 Project Settings -> Engine Binary File Rewriter 中开启`Fix Freezing in AsyncResourceUploadBlocking`
 6. 重新执行第3步和第4步，确认渲染线程不再卡死
 
+### 禁用RefreshFQNCache
+`RefreshFQNCache`会遍历所有程序集中的类型，当使用HybridCLR DHE时，可能会导致客户端卡住比较久（详见[文章](https://alanliu90.hatenablog.com/entry/2026/08/09/%E6%8E%92%E6%9F%A5%E9%A2%84%E5%88%B6%E4%BD%93%E5%8A%A0%E8%BD%BD%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98)）
+
+本工具可以屏蔽掉这个函数的调用，从而避免它引发的一系列问题
+
+注意：这个函数和`MovedFromAttribute`有关，请确认项目没有依赖此功能，再屏蔽
+
+工程中包含了Android、iOS的开发版本和发布版本的配置。已测试版本：
+* 2022.3.57f1
